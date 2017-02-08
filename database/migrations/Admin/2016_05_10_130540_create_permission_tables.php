@@ -43,6 +43,23 @@ class CreatePermissionTables extends Migration
             $table->primary(['user_id', 'permission_id']);
         });
 
+        Schema::create('employee_has_permissions', function (Blueprint $table) use ($config) {
+            $table->integer('employee_id')->unsigned();
+            $table->integer('permission_id')->unsigned();
+
+            $table->foreign('employee_id')
+                ->references('id')
+                ->on('employees')
+                ->onDelete('cascade');
+
+            $table->foreign('permission_id')
+                ->references('id')
+                ->on($config['permissions'])
+                ->onDelete('cascade');
+
+            $table->primary(['employee_id', 'permission_id']);
+        });
+
         Schema::create($config['user_has_roles'], function (Blueprint $table) use ($config) {
             $table->integer('role_id')->unsigned();
             $table->integer('user_id')->unsigned();
@@ -58,6 +75,23 @@ class CreatePermissionTables extends Migration
                 ->onDelete('cascade');
 
             $table->primary(['role_id', 'user_id']);
+
+            Schema::create('employee_has_roles', function (Blueprint $table) use ($config) {
+                $table->integer('role_id')->unsigned();
+                $table->integer('employee_id')->unsigned();
+
+                $table->foreign('role_id')
+                    ->references('id')
+                    ->on($config['roles'])
+                    ->onDelete('cascade');
+
+                $table->foreign('employee_id')
+                    ->references('id')
+                    ->on('employees')
+                    ->onDelete('cascade');
+
+                $table->primary(['role_id', 'employee_id']);
+            });
 
             Schema::create($config['role_has_permissions'], function (Blueprint $table) use ($config) {
                 $table->integer('permission_id')->unsigned();
@@ -89,7 +123,9 @@ class CreatePermissionTables extends Migration
 
         Schema::drop($config['role_has_permissions']);
         Schema::drop($config['user_has_roles']);
+        Schema::drop('employee_has_roles');
         Schema::drop($config['user_has_permissions']);
+        Schema::drop('employee_has_permissions');
         Schema::drop($config['roles']);
         Schema::drop($config['permissions']);
     }
