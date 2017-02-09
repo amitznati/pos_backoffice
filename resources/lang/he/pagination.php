@@ -1,6 +1,6 @@
 <?php 
 
  return [
-    "previous" => "« הקודם",
-    "next" => "הבא »"
+    "previous" => "« Previous",
+    "next" => "Next »"
 ];
