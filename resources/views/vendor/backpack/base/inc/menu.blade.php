@@ -25,7 +25,21 @@
         @else
             <li><a href="{{ url(config('backpack.base.route_prefix', 'admin').'/logout') }}"><i class="fa fa-btn fa-sign-out"></i> {{ trans('backpack::base.logout') }}</a></li>
         @endif
-
+        <li>
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Languages
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            @foreach( array('en','he') as $lang)
+              <li class="{{ session('locale') == $lang ? 'active' : '' }}">
+                <a href="{{ route('locale.setlocale', $lang) }}" >{{ $lang }}</a>
+              </li>
+            @endforeach
+            </ul>
+          </div>
+        </li>
        <!-- ========== End of top menu right items ========== -->
     </ul>
 </div>

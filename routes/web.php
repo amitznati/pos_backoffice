@@ -14,3 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('locale/{locale?}',
+    [
+        'as' => 'locale.setlocale',
+        'uses' => 'LocaleController@setLocale'
+    ]);
+// Route::get('/locale/{locale}', function ($locale) {
+// 	xdebug_break();
+// 	App::setLocale($locale);
+//     return redirect('admin');
+// })->name('locale');
