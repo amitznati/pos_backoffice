@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" {!! App::isLocale('he') ? "dir=\"rtl\"" : ''!!}>
+<html lang="en" {!! $localeStr == '-rtl' ? "dir=\"rtl\"" : ''!!}>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,30 +11,18 @@
     <title>
       {{ isset($title) ? $title.' :: '.config('backpack.base.project_name').' Admin' : config('backpack.base.project_name').' Admin' }}
     </title>
-
     @yield('before_styles')
-    <?php 
-      $localStr = '';
-      $localSide = 'right';
-      if(App::isLocale('he'))
-      {
-        $localStr = '-rtl';
-        $localSide = 'left';
-      }
-      
-
-    ?>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localStr.'/') }}/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localeStr.'/') }}/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localStr.'/') }}/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localeStr.'/') }}/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localStr.'/') }}/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localeStr.'/') }}/dist/css/skins/_all-skins.min.css">
 
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localStr.'/') }}/plugins/pace/pace.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localeStr.'/') }}/plugins/pace/pace.min.css">
     <link rel="stylesheet" href="{{ asset('vendor/backpack/pnotify/pnotify.custom.min.css') }}">
 
     <!-- BackPack Base CSS -->
@@ -99,7 +87,7 @@
 
       <footer class="main-footer">
         @if (config('backpack.base.show_powered_by'))
-            <div class="pull-{!! $localSide !!}" hidden-xs">
+            <div class="pull-{!! $right !!}" hidden-xs">
               {{ trans('backpack::base.powered_by') }} <a target="_blank" href="http://laravelbackpack.com">Laravel BackPack</a>
             </div>
         @endif
@@ -110,16 +98,16 @@
 
 
     @yield('before_scripts')
-
+   
     <!-- jQuery 2.2.0 -->
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script>window.jQuery || document.write('<script src="{{ asset('vendor/adminlte') }}/plugins/jQuery/jQuery-2.2.0.min.js"><\/script>')</script>
     <!-- Bootstrap 3.3.5 -->
-    <script src="{{ asset('vendor/adminlte'.$localStr.'/') }}/bootstrap/js/bootstrap.min.js"></script>
-    <script src="{{ asset('vendor/adminlte'.$localStr.'/') }}/plugins/pace/pace.min.js"></script>
-    <script src="{{ asset('vendor/adminlte'.$localStr.'/') }}/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <script src="{{ asset('vendor/adminlte'.$localStr.'/') }}/plugins/fastclick/fastclick.js"></script>
-    <script src="{{ asset('vendor/adminlte'.$localStr.'/') }}/dist/js/app.min.js"></script>
+    <script src="{{ asset('vendor/adminlte'.$localeStr.'/') }}/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ asset('vendor/adminlte'.$localeStr.'/') }}/plugins/pace/pace.min.js"></script>
+    <script src="{{ asset('vendor/adminlte'.$localeStr.'/') }}/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <script src="{{ asset('vendor/adminlte'.$localeStr.'/') }}/plugins/fastclick/fastclick.js"></script>
+    <script src="{{ asset('vendor/adminlte'.$localeStr.'/') }}/dist/js/app.min.js"></script>
 
     <!-- page script -->
     <script type="text/javascript">

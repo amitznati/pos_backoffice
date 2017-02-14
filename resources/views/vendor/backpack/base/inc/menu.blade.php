@@ -1,4 +1,4 @@
-<div class="navbar-custom-menu pull-left">
+<div class="navbar-custom-menu pull-{!!$left!!}">
     <ul class="nav navbar-nav">
         <!-- =================================================== -->
         <!-- ========== Top menu items (ordered left) ========== -->
