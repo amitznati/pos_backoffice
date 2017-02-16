@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('layouts.app')
 
 @section('header')
 	<section class="content-header">
@@ -48,9 +48,9 @@
 		<section class="lang-inputs">
 		@if (!empty($fileArray))
 			{!! Form::open(array('url' => url(config('backpack.base.route_prefix', 'admin')."/language/texts/{$currentLang}/{$currentFile}"), 'method' => 'post', 'id' => 'lang-form', 'class' => 'form-horizontal', 'data-required' => trans('admin.language.fields_required'))) !!}
-				{!! Form::button(trans('backpack::crud.save'), array('type' => 'submit', 'class' => 'btn btn-success submit pull-right hidden-xs hidden-sm', 'style' => "margin-top: -60px;")) !!}
+				{!! Form::button(trans('backpack::crud.save'), array('type' => 'submit', 'class' => 'btn btn-success submit pull-{!!$right!!} hidden-xs hidden-sm', 'style' => "margin-top: -60px;")) !!}
 				<div class="form-group hidden-sm hidden-xs">
-					<div class="col-sm-2 text-right">
+					<div class="col-sm-2 text-{!!$right!!}">
 						<h4>{{ trans('backpack::langfilemanager.key') }}</h4>
 					</div>
 					<div class="hidden-sm hidden-xs col-md-5">

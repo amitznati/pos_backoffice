@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('layouts.app')
 
 @section('after_scripts')
     <!-- jQuery and jQuery UI (REQUIRED) -->
@@ -8,7 +8,7 @@
 
     <!-- elFinder CSS (REQUIRED) -->
     <link rel="stylesheet" type="text/css" href="<?= asset($dir.'/css/elfinder.min.css') ?>">
-    <!-- <link rel="stylesheet" type="text/css" href="<?= asset($dir.'/css/theme.css') ?>"> -->
+     <link rel="stylesheet" type="text/css" href="<?= asset($dir.'/css/theme.css') ?>"> 
     <link rel="stylesheet" type="text/css" href="<?= asset('vendor/backpack/elfinder/elfinder.backpack.theme.css') ?>">
 
     <!-- elFinder JS (REQUIRED) -->

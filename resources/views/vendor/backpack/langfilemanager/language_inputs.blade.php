@@ -20,7 +20,7 @@ echo Form::label($key, str_replace(['_', '-'], ' ', $key), array('class' => 'col
 		if (preg_match('/(\|)/', $item)) {
 				$chuncks = explode('|', $item);
 
-				echo '<div style="margin-left: 15px;">';
+				echo '<div style="margin-{{$left}}: 15px;">';
 				foreach ($chuncks as $k => $chunck) {
 					preg_match('/^({\w}|\[[\w,]+\])([\w\s:]+)/', trim($chunck), $m);
 

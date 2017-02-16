@@ -1,19 +1,24 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html >
+<html {!! $localeStr == '-rtl' ? "dir=\"rtl\"" : ''!!}>
 <head>
     <meta charset="UTF-8">
     <title>InfyOm Generator</title>
+    @yield('before_styles')
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    {{-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> --}}
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localeStr.'/') }}/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.3/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.3/css/skins/_all-skins.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.3/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.3/css/skins/_all-skins.min.css"> --}}
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localeStr.'/') }}/dist/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte'.$localeStr.'/') }}/dist/css/skins/_all-skins.min.css">
 
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
+    @yield('after_styles')
     @yield('css')
 </head>
 
@@ -59,10 +64,10 @@
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <div class="pull-left">
+                                    <div class="pull-{{$left}}">
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
-                                    <div class="pull-right">
+                                    <div class="pull-{{$right}}">
                                         <a href="{!! url('/logout') !!}" class="btn btn-default btn-flat"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             Sign out
@@ -83,8 +88,18 @@
         @include('layouts.sidebar')
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            @yield('content')
+            <!-- Content Header (Page header) -->
+            @yield('header')
+
+            <!-- Main content -->
+            <section class="content">
+
+              @yield('content')
+
+            </section>
+            <!-- /.content -->
         </div>
+        <!-- /.content-wrapper -->
 
         <!-- Main Footer -->
         <footer class="main-footer" style="max-height: 100px;text-align: center">
@@ -138,7 +153,7 @@
         </div>
     </div>
     @endif
-
+    @yield('before_scripts')
     <!-- jQuery 2.1.4 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
@@ -147,7 +162,9 @@
 
     <!-- AdminLTE App -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.3/js/app.min.js"></script>
+    @include('backpack::inc.alerts')
 
+    @yield('after_scripts')
     @yield('scripts')
 </body>
 </html>

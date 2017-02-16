@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('layouts.app')
 
 @section('header')
     <section class="content-header">
@@ -23,7 +23,7 @@
             <th>#</th>
             <th>{{ trans('backpack::logmanager.date') }}</th>
             <th>{{ trans('backpack::logmanager.last_modified') }}</th>
-            <th class="text-right">{{ trans('backpack::logmanager.file_size') }}</th>
+            <th class="text-{{$right}}">{{ trans('backpack::logmanager.file_size') }}</th>
             <th>{{ trans('backpack::logmanager.actions') }}</th>
           </tr>
         </thead>
@@ -33,7 +33,7 @@
             <th scope="row">{{ $k+1 }}</th>
             <td>{{ \Carbon\Carbon::createFromTimeStamp($log['last_modified'])->formatLocalized('%d %B %Y') }}</td>
             <td>{{ \Carbon\Carbon::createFromTimeStamp($log['last_modified'])->formatLocalized('%H:%M') }}</td>
-            <td class="text-right">{{ round((int)$log['file_size']/1048576, 2).' MB' }}</td>
+            <td class="text-{{$right}}">{{ round((int)$log['file_size']/1048576, 2).' MB' }}</td>
             <td>
                 <a class="btn btn-xs btn-default" href="{{ url(config('backpack.base.route_prefix', 'admin').'/log/preview/'.$log['file_name']) }}"><i class="fa fa-eye"></i> {{ trans('backpack::logmanager.preview') }}</a>
                 <a class="btn btn-xs btn-default" href="{{ url(config('backpack.base.route_prefix', 'admin').'/log/download/'.$log['file_name']) }}"><i class="fa fa-cloud-download"></i> {{ trans('backpack::logmanager.download') }}</a>

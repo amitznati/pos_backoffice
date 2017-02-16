@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('layouts.app')
 
 @section('after_styles')
     <!-- Ladda Buttons (loading buttons) -->
