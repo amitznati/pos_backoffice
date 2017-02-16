@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('layouts.app')
 
 @section('content-header')
 	<section class="content-header">
