@@ -25,3 +25,9 @@ Route::get('locale/{locale?}',
 // 	App::setLocale($locale);
 //     return redirect('admin');
 // })->name('locale');
+
+Route::resource('departments', 'departmentController');
+
+Route::resource('groups', 'groupController');
+
+Route::resource('products', 'ProductController');

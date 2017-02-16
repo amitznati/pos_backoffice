@@ -55,3 +55,15 @@
       <!-- /.sidebar -->
     </aside>
 @endif
+<li class="{{ Request::is('departments*') ? 'active' : '' }}">
+    <a href="{!! route('departments.index') !!}"><i class="fa fa-edit"></i><span>departments</span></a>
+</li>
+
+<li class="{{ Request::is('groups*') ? 'active' : '' }}">
+    <a href="{!! route('groups.index') !!}"><i class="fa fa-edit"></i><span>groups</span></a>
+</li>
+
+<li class="{{ Request::is('products*') ? 'active' : '' }}">
+    <a href="{!! route('products.index') !!}"><i class="fa fa-edit"></i><span>Products</span></a>
+</li>
+

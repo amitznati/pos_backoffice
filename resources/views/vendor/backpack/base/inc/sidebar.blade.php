@@ -14,7 +14,22 @@
           </div>
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
+
         <ul class="sidebar-menu">
+          <li class="treeview">
+            <a href="#"><i class="fa fa-wrench"></i> <span>{{ trans('backpack::pos.catalog') }}</span> <i class="fa fa-angle-{{$right}} pull-{{$right}}"></i></a>
+            <ul class="treeview-menu">
+              <li class="{{ Request::is('departments*') ? 'active' : '' }}">
+                  <a href="{!! route('departments.index') !!}"><i class="fa fa-edit"></i><span>{{ trans('backpack::pos.departments') }}</span></a>
+              </li>
+              <li class="{{ Request::is('groups*') ? 'active' : '' }}">
+                  <a href="{!! route('groups.index') !!}"><i class="fa fa-edit"></i><span>{{ trans('backpack::pos.groups') }}</span></a>
+              </li>
+              <li class="{{ Request::is('products*') ? 'active' : '' }}">
+                  <a href="{!! route('products.index') !!}"><i class="fa fa-edit"></i><span>{{ trans('backpack::pos.products') }}</span></a>
+              </li>
+            </ul>
+          </li>
         <li class="treeview">
             <a href="#"><i class="fa fa-wrench"></i> <span>{{ trans('backpack::base.administration') }}</span> <i class="fa fa-angle-{{$right}} pull-{{$right}}"></i></a>
             <ul class="treeview-menu">
