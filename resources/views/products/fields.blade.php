@@ -1,25 +1,30 @@
 <!-- Name Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('name', 'Name:') !!}
     {!! Form::text('name', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Dept Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('dept_id', 'Dept Id:') !!}
-    {!! Form::number('dept_id', null, ['class' => 'form-control']) !!}
+    {!! Form::label('dept_id', 'Department:') !!}
+{{--     {!! Form::select('dept_id', $data['department'], null, ['class' => 'form-control']) !!} --}}
+    <select  name="dept_id" class="form-control" >
+    @foreach($data['departments'] as $department)
+      <option value="{{$department->id}}">{{$department->name}}</option>
+    @endforeach
+  </select>
 </div>
 
 <!-- Group Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('group_id', 'Group Id:') !!}
-    {!! Form::number('group_id', null, ['class' => 'form-control']) !!}
+    {!! Form::label('group_id', 'Group:') !!}
+    {!! Form::select('group_id', $data['groups'], null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Vandor Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('vandor_id', 'Vandor Id:') !!}
-    {!! Form::number('vandor_id', null, ['class' => 'form-control']) !!}
+    {!! Form::label('vandor_id', 'Vandor:') !!}
+    {!! Form::select('vandor_id', $data['vendors'], null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Sale Price Field -->

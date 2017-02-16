@@ -10,7 +10,9 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-
+use App\Models\Department;
+use App\Models\Vendor;
+use App\Models\Group;
 class ProductController extends AppBaseController
 {
     /** @var  ProductRepository */
@@ -43,7 +45,12 @@ class ProductController extends AppBaseController
      */
     public function create()
     {
-        return view('products.create');
+    	//xdebug_break();
+        $departments = Department::all();
+        $departments->load('groups');
+        $groups = $departments->first()->groups->pluck('name','id');
+        $vendors = Vendor::all()->pluck('name','id');
+        return view('products.create')->withData(['departments' => $departments,'groups' => $groups,'vendors' => $vendors]);
     }
 
     /**

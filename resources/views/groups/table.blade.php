@@ -1,4 +1,4 @@
-<table class="table table-responsive" id="groups-table">
+<table class="table-{{$left}} table table-responsive" id="groups-table" >
     <thead>
         <th>{{trans('backpack::pos.group')}}</th>
         <th>{{trans('backpack::pos.department')}}</th>
@@ -8,7 +8,7 @@
     @foreach($groups as $group)
         <tr>
             <td>{!! $group->name !!}</td>
-            <td>{!! $group->department_id !!}</td>
+            <td>{!! $group->department->name !!}</td>
             <td>
                 {!! Form::open(['route' => ['groups.destroy', $group->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
