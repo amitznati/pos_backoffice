@@ -46,6 +46,8 @@ class Product extends Model
         'dept_id' => 'integer',
         'group_id' => 'integer',
         'vandor_id' => 'integer',
+        'sale_price' => 'decimal',
+        'bay_price' => 'decimal',
         'bacode' => 'string',
         'brand' => 'string',
         'description' => 'string'
@@ -65,7 +67,7 @@ class Product extends Model
      **/
     public function department()
     {
-        return $this->belongsTo(\App\Models\Department::class);
+        return $this->belongsTo(\App\Models\Department::class, 'dept_id');
     }
 
     /**

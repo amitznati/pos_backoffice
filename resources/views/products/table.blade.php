@@ -15,9 +15,9 @@
     @foreach($products as $product)
         <tr>
             <td>{!! $product->name !!}</td>
-            <td>{!! $product->department->name !!}</td>
-            <td>{!! $product->group->name !!}</td>
-            <td>{!! $product->vandor->company_name !!}</td>
+            <td>{!! $product->department ? $product->department->name : '' !!}</td>
+            <td>{!! $product->group ? $product->group->name : '' !!}</td>
+            <td>{!! $product->vandor ? $product->vandor->company_name : '' !!}</td>
             <td>{!! $product->sale_price !!}</td>
             <td>{!! $product->bay_price !!}</td>
             <td>{!! $product->bacode !!}</td>

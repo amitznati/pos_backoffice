@@ -30,13 +30,13 @@
 <!-- Sale Price Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('sale_price', 'Sale Price:') !!}
-    {!! Form::number('sale_price', null, ['class' => 'form-control']) !!}
+    {!! Form::number('sale_price', 0, ['class' => 'form-control currency','min' => 0, 'step' => '0.01']) !!}
 </div>
 
 <!-- Bay Price Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('bay_price', 'Bay Price:') !!}
-    {!! Form::number('bay_price', null, ['class' => 'form-control']) !!}
+    {!! Form::number('bay_price', 0, ['class' => 'form-control currency','min' => 0, 'step' => '0.01']) !!}
 </div>
 
 <!-- Bacode Field -->

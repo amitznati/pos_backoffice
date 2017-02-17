@@ -12,7 +12,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Department;
 use App\Models\Vendor;
-use App\Models\Group;
+use App\Models\Product;
 class ProductController extends AppBaseController
 {
     /** @var  ProductRepository */
@@ -45,7 +45,7 @@ class ProductController extends AppBaseController
      */
     public function create()
     {
-    	//xdebug_break();
+    	
         $departments = Department::all();
         $departments->load('groups');
         $groups = $departments->first()->groups->pluck('name','id');
@@ -63,9 +63,8 @@ class ProductController extends AppBaseController
     public function store(CreateProductRequest $request)
     {
         $input = $request->all();
-
         $product = $this->productRepository->create($input);
-
+		
         Flash::success('Product saved successfully.');
 
         return redirect(route('products.index'));
@@ -107,8 +106,11 @@ class ProductController extends AppBaseController
 
             return redirect(route('products.index'));
         }
-
-        return view('products.edit')->with('product', $product);
+        $departments = Department::all();
+        $departments->load('groups');
+        $groups = $departments->first()->groups->pluck('name','id');
+        $vendors = Vendor::all()->pluck('name','id');
+        return view('products.edit')->with('product', $product)->withData(['departments' => $departments,'groups' => $groups,'vendors' => $vendors]);;
     }
 
     /**
