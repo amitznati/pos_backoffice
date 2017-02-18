@@ -7,12 +7,12 @@
 <!-- Dept Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('dept_id', 'Department:') !!}
-{{--     {!! Form::select('dept_id', $data['department'], null, ['class' => 'form-control']) !!} --}}
-    <select  name="dept_id" class="form-control" >
-    @foreach($data['departments'] as $department)
-      <option value="{{$department->id}}">{{$department->name}}</option>
-    @endforeach
-  </select>
+    {{-- {!! Form::select('dept_id', $data['departments'], null, ['class' => 'form-control']) !!} --}}
+    <select  name="dept_id" class="form-control">
+        @foreach($data['departments'] as $department)
+          <option value="{{$department->id}}">{{$department->name}}</option>
+        @endforeach
+    </select>
 </div>
 
 <!-- Group Id Field -->

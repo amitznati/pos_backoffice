@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('products.create_edit_script')
 
 @section('content')
     <section class="content-header">

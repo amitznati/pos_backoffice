@@ -46,8 +46,7 @@ class ProductController extends AppBaseController
     public function create()
     {
     	
-        $departments = Department::all();
-        $departments->load('groups');
+        $departments = Department::all()->load('groups');
         $groups = $departments->first()->groups->pluck('name','id');
         $vendors = Vendor::all()->pluck('name','id');
         return view('products.create')->withData(['departments' => $departments,'groups' => $groups,'vendors' => $vendors]);

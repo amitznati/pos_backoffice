@@ -1,4 +1,4 @@
-@extends('backpack::layout')
+@extends('products.create_edit_script')
 
 @section('content')
     <section class="content-header">
@@ -21,20 +21,4 @@
             </div>
         </div>
     </div>
-@endsection
-@section('after_scripts')
-<script>
-    departments = <?php echo $data['departments']; ?>;
-    $('select[name="dept_id"]').on('change', function() {  
-        ddgroup = $('select[name="group_id"]');
-        ddgroup.empty();  
-        departments.forEach(function(department){
-            if($('select[name="dept_id"]').val() == department.id)
-                department.groups.forEach(function(group){
-                    var option = $('<option></option>').attr("value", group.id).text(group.name);
-                ddgroup.append(option);
-            });                                
-        });
-    });
-</script>
 @endsection
