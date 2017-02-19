@@ -33,15 +33,20 @@ class ProductController extends AppBaseController
      */
     public function index(Request $request)
     {
+    	//xdebug_break();
         $this->productRepository->pushCriteria(new RequestCriteria($request));
         $products = $this->productRepository->all();
-        $departments = Department::all()->load('groups');
-        $groups = ['name' => 'All'];
-        $vendors = Vendor::all()->pluck('name','id');
+        
         return view('products.index')
-            ->with('products', $products)->withData(['departments' => $departments,'groups' => $groups,'vendors' => $vendors]);
+            ->with('products', $products)->withData($this->searchData());
     }
-
+	private function searchData()
+	{
+		$departments = Department::all()->load('groups');
+		$groups = ['0' => 'All'];
+		$vendors = Vendor::all()->pluck('name','id');
+		return array('departments' => $departments,'groups' => $groups,'vendors' => $vendors);
+	}
     /**
      * Show the form for creating a new Product.
      *
@@ -109,8 +114,7 @@ class ProductController extends AppBaseController
 
             return redirect(route('products.index'));
         }
-        $departments = Department::all();
-        $departments->load('groups');
+        $departments = Department::all()->load('groups');
         $groups = $departments->first()->groups->pluck('name','id');
         $vendors = Vendor::all()->pluck('name','id');
         return view('products.edit')->with('product', $product)->withData(['departments' => $departments,'groups' => $groups,'vendors' => $vendors]);;
@@ -167,30 +171,37 @@ class ProductController extends AppBaseController
 
     public function search(SearchProductRequest $request)
     {
-    	xdebug_break();
+    	//xdebug_break();
         $input = $request->all();
-        $attrs = [$input->sale_price_from,$input->sale_price_to,$input->bay_price_from,$input->bay_price_to];
-        $query = 'sale_price > ? and sale_price < ? and bay_price > ? and bay_price < ? '
-        if($input->dept_id > 0)
+        $attrs = [$input['sale_price_from'],$input['sale_price_to'],$input['bay_price_from'],$input['bay_price_to']];
+        $query = 'sale_price >= ? and sale_price <= ? and bay_price >= ? and bay_price <= ? ';
+        if($input['dept_id'] > 0)
         {
-            $query += 'and dept_id = ? ';
-            $attrs->push($input->dept_id);
+            $query = $query . 'and dept_id = ? ';
+            array_push($attrs ,$input['dept_id']);
         }
-        if($input->group_id > 0)
+        if($input['group_id'] > 0)
         {
-            $query += 'and group_id = ? ';
-            $attrs->push($input->group_id);
+        	$query = $query . 'and group_id = ? ';
+        	array_push($attrs ,$input['group_id']);
         }
-        if($input->vandor_id > 0)
+        if($input['vandor_id'] > 0)
         {
-            $query += 'and vandor_id = ? ';
-            $attrs->push($input->vandor_id);
+        	$query = $query . 'and vandor_id = ? ';
+        	array_push($attrs ,$input['vandor_id']);
         }
-        if($input->barcode)
+        if($input['barcode'])
         {
-            $query += 'and barcode = ? ';
-            $attrs->push($input->barcode);
+        	$query = $query . 'and barcode like ? ';
+        	array_push($attrs ,'%'.$input['barcode'].'%');
         }
-        return redirect(route('products.index'));
+        if($input['name'])
+        {
+        	$query = $query . 'and name like ? ';
+        	array_push($attrs ,'%'.$input['name'].'%');
+        }
+
+        $products = Product::whereRaw($query,$attrs)->get();
+        return view('products.index')->with('products',$products)->with('data',$this->searchData());
     }
 }

@@ -31,7 +31,7 @@
 <!-- Sale Price To Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('sale_price_to', 'Sale Price - To:') !!}
-    {!! Form::number('sale_price_to', 0, ['class' => 'form-control currency','min' => 0, 'step' => '0.01']) !!}
+    {!! Form::number('sale_price_to', 9999, ['class' => 'form-control currency','min' => 0, 'step' => '0.01']) !!}
 </div>
 
 <!-- Bay Price From Field -->
@@ -43,7 +43,7 @@
 <!-- Bay Price To Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('bay_price_to', 'Bay Price To:') !!}
-    {!! Form::number('bay_price_to', 0, ['class' => 'form-control currency','min' => 0, 'step' => '0.01']) !!}
+    {!! Form::number('bay_price_to', 9999, ['class' => 'form-control currency','min' => 0, 'step' => '0.01']) !!}
 </div>
 
 <!-- Vandor Id Field -->
@@ -52,10 +52,10 @@
     {!! Form::select('vandor_id', $data['vendors'], null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Bacode Field -->
+<!-- Barcode Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('bacode', 'Bacode:') !!}
-    {!! Form::text('bacode', null, ['class' => 'form-control']) !!}
+    {!! Form::label('barcode', 'barcode:') !!}
+    {!! Form::text('barcode', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Brand Field -->
