@@ -31,3 +31,5 @@ Route::resource('departments', 'departmentController');
 Route::resource('groups', 'groupController');
 
 Route::resource('products', 'ProductController');
+
+Route::post('products/search', ['as' => 'products.search' , 'uses' => 'ProductController@search']);

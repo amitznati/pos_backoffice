@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\SearchProductRequest;
 use App\Repositories\ProductRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Department;
+use App\Models\Group;
 use App\Models\Vendor;
 use App\Models\Product;
 class ProductController extends AppBaseController
@@ -33,9 +35,12 @@ class ProductController extends AppBaseController
     {
         $this->productRepository->pushCriteria(new RequestCriteria($request));
         $products = $this->productRepository->all();
-
+        //xdebug_break();
+        $departments = Department::all()->load('groups');
+        $groups = ['name' => 'All'];
+        $vendors = Vendor::all()->pluck('name','id');
         return view('products.index')
-            ->with('products', $products);
+            ->with('products', $products)->withData(['departments' => $departments,'groups' => $groups,'vendors' => $vendors]);
     }
 
     /**
@@ -158,6 +163,13 @@ class ProductController extends AppBaseController
 
         Flash::success('Product deleted successfully.');
 
+        return redirect(route('products.index'));
+    }
+
+    public function search(SearchProductRequest $request)
+    {
+    	xdebug_break();
+        $input = $request->all();
         return redirect(route('products.index'));
     }
 }
