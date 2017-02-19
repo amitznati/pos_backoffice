@@ -17,7 +17,7 @@ class ProductRepository extends BaseRepository
         'vandor_id',
         'sale_price',
         'bay_price',
-        'bacode',
+        'barcode',
         'brand',
         'description'
     ];

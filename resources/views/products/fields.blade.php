@@ -39,10 +39,10 @@
     {!! Form::number('bay_price', 0, ['class' => 'form-control currency','min' => 0, 'step' => '0.01']) !!}
 </div>
 
-<!-- Bacode Field -->
+<!-- barcode Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('bacode', 'Bacode:') !!}
-    {!! Form::text('bacode', null, ['class' => 'form-control']) !!}
+    {!! Form::label('barcode', 'barcode:') !!}
+    {!! Form::text('barcode', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Brand Field -->

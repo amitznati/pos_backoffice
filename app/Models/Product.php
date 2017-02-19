@@ -30,7 +30,7 @@ class Product extends Model
         'vandor_id',
         'sale_price',
         'bay_price',
-        'bacode',
+        'barcode',
         'brand',
         'description'
     ];
@@ -48,7 +48,7 @@ class Product extends Model
         'vandor_id' => 'integer',
         'sale_price' => 'decimal',
         'bay_price' => 'decimal',
-        'bacode' => 'string',
+        'barcode' => 'string',
         'brand' => 'string',
         'description' => 'string'
     ];

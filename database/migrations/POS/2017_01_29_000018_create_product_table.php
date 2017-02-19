@@ -21,7 +21,7 @@ class CreateProductTable extends Migration
             $table->integer('vandor_id')->unsigned()->nullable()->default(null);
             $table->decimal('sale_price', 19, 4);
             $table->decimal('bay_price', 19, 4)->nullable()->default(null);
-            $table->string('bacode')->nullable()->default(null);
+            $table->string('barcode')->nullable()->default(null);
             $table->string('brand')->nullable()->default(null);
             $table->longText('description')->nullable()->default(null);
             $table->timestamps();

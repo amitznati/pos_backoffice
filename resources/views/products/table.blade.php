@@ -6,7 +6,7 @@
         <th>Vandor</th>
         <th>Sale Price</th>
         <th>Bay Price</th>
-        <th>Bacode</th>
+        <th>barcode</th>
         <th>Brand</th>
         <th>Description</th>
         <th colspan="3">Action</th>
@@ -20,7 +20,7 @@
             <td>{!! $product->vandor ? $product->vandor->company_name : '' !!}</td>
             <td>{!! $product->sale_price !!}</td>
             <td>{!! $product->bay_price !!}</td>
-            <td>{!! $product->bacode !!}</td>
+            <td>{!! $product->barcode !!}</td>
             <td>{!! $product->brand !!}</td>
             <td>{!! $product->description !!}</td>
             <td>

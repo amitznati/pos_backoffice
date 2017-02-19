@@ -40,10 +40,10 @@
     <p>{!! $product->bay_price !!}</p>
 </div>
 
-<!-- Bacode Field -->
+<!-- barcode Field -->
 <div class="form-group">
-    {!! Form::label('bacode', 'Bacode:') !!}
-    <p>{!! $product->bacode !!}</p>
+    {!! Form::label('barcode', 'barcode:') !!}
+    <p>{!! $product->barcode !!}</p>
 </div>
 
 <!-- Brand Field -->
