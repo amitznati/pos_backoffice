@@ -35,7 +35,6 @@ class ProductController extends AppBaseController
     {
         $this->productRepository->pushCriteria(new RequestCriteria($request));
         $products = $this->productRepository->all();
-        //xdebug_break();
         $departments = Department::all()->load('groups');
         $groups = ['name' => 'All'];
         $vendors = Vendor::all()->pluck('name','id');
@@ -170,6 +169,28 @@ class ProductController extends AppBaseController
     {
     	xdebug_break();
         $input = $request->all();
+        $attrs = [$input->sale_price_from,$input->sale_price_to,$input->bay_price_from,$input->bay_price_to];
+        $query = 'sale_price > ? and sale_price < ? and bay_price > ? and bay_price < ? '
+        if($input->dept_id > 0)
+        {
+            $query += 'and dept_id = ? ';
+            $attrs->push($input->dept_id);
+        }
+        if($input->group_id > 0)
+        {
+            $query += 'and group_id = ? ';
+            $attrs->push($input->group_id);
+        }
+        if($input->vandor_id > 0)
+        {
+            $query += 'and vandor_id = ? ';
+            $attrs->push($input->vandor_id);
+        }
+        if($input->barcode)
+        {
+            $query += 'and barcode = ? ';
+            $attrs->push($input->barcode);
+        }
         return redirect(route('products.index'));
     }
 }

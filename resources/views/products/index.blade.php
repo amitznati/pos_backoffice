@@ -15,7 +15,7 @@
         <div class="clearfix">
             <div class="box-body">
             <a id="btnSearch" class="btn btn-primary">Show Filter</a>
-                <div class="row search-fields">
+                <div class="row search-fields" style="display:none">
                     {!! Form::open(['route' => 'products.search']) !!}
 
                         @include('products.search_fields')
@@ -34,7 +34,6 @@
 @section('after_scripts')
 <script type="text/javascript">
     searchFields = $('.search-fields');
-    searchFields.toggle();
     $('#btnSearch').click(function(){
         searchFields.toggle();
         if($('#btnSearch').text() == 'Show Filter')
