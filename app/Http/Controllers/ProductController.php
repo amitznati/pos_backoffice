@@ -15,6 +15,7 @@ use App\Models\Department;
 use App\Models\Group;
 use App\Models\Vendor;
 use App\Models\Product;
+use Illuminate\Support\Facades\Session;
 class ProductController extends AppBaseController
 {
     /** @var  ProductRepository */
@@ -25,6 +26,7 @@ class ProductController extends AppBaseController
         $this->productRepository = $productRepo;
     }
 
+ 
     /**
      * Display a listing of the Product.
      *
@@ -33,9 +35,16 @@ class ProductController extends AppBaseController
      */
     public function index(Request $request)
     {
-    	//xdebug_break();
-        $this->productRepository->pushCriteria(new RequestCriteria($request));
-        $products = $this->productRepository->all();
+    	if(Session::get('isSearchProduct'))
+    	{
+            $products = Session::pull('searchResultProducts');
+            Session::put('isSearchProduct', false);
+    	}
+        else
+        {
+            $this->productRepository->pushCriteria(new RequestCriteria($request));
+            $products = $this->productRepository->all();
+        }
         
         return view('products.index')
             ->with('products', $products)->withData($this->searchData());
@@ -202,6 +211,8 @@ class ProductController extends AppBaseController
         }
 
         $products = Product::whereRaw($query,$attrs)->get();
-        return view('products.index')->with('products',$products)->with('data',$this->searchData());
+		Session::put('isSearchProduct',true);
+		Session::put('searchResultProducts',$products);
+        return redirect(route('products.index'));
     }
 }

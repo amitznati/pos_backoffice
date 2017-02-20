@@ -17,7 +17,10 @@
     function setGroups(dept_id)
     {
         ddgroup.empty(); 
-        ddgroup.prepend("<option value='0'>All</option>").val('0');
+        if(window.location.pathname == '/products/' || window.location.pathname == '/products')
+        {
+            ddgroup.prepend("<option value='0'>All</option>").val('0');
+        }
         departments.forEach(function(department){
             if(dept_id == department.id)
                 department.groups.forEach(function(group){
