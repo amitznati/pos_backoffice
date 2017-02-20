@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\group;
 use InfyOm\Generator\Common\BaseRepository;
 
-class groupRepository extends BaseRepository
+class GroupRepository extends BaseRepository
 {
     /**
      * @var array

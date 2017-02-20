@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Department;
 use InfyOm\Generator\Common\BaseRepository;
 
-class departmentRepository extends BaseRepository
+class DepartmentRepository extends BaseRepository
 {
     /**
      * @var array
