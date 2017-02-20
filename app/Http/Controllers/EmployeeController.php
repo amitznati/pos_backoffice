@@ -11,6 +11,7 @@ use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Person;
+use App\Models\Employee;
 
 class EmployeeController extends AppBaseController
 {
@@ -59,11 +60,11 @@ class EmployeeController extends AppBaseController
     	xdebug_break();
         $input = $request->all();
         
-        $employee = $this->employeeRepository->create([]);
-		$input['personable_id'] = $employee->id;
-		$input['personable_type'] = 'Employee';
-        $person = Person::create($input);
-		$employee->person()->associate($person);
+		$employee = new Employee();
+		$person = new Person($input);
+		$employee->save();
+		$person->personable()->associate($employee);
+		$person->save();
         Flash::success('Employee saved successfully.');
 
         return redirect(route('employees.index'));

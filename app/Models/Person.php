@@ -69,7 +69,7 @@ class Person extends Model
      **/
     public function address()
     {
-        return $this->belongsTo(\App\Models\Address::class);
+        return $this->hasOne(\App\Models\Address::class);
     }
 
     public function personable()

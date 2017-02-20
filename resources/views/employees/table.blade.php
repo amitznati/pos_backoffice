@@ -1,4 +1,4 @@
-<table class="table table-responsive" id="employees-table">
+<table class="table table-responsive table-hover table-condensed" id="employees-table">
     <thead>
         <th>First Name</th>
         <th>Last Name</th>
@@ -6,7 +6,6 @@
         <th>Birthday</th>
         <th>Phone</th>
         <th>Email</th>
-        <th>Address Id</th>
         <th>Password</th>
         <th colspan="3">Action</th>
     </thead>
@@ -19,10 +18,9 @@
             <td>{!! $employee->person->birthday !!}</td>
             <td>{!! $employee->person->phone !!}</td>
             <td>{!! $employee->person->email !!}</td>
-            <td>{!! $employee->person->address_id !!}</td>
             <td>{!! $employee->person->password !!}</td>
             <td>
-                {!! Form::open(['route' => ['employee.destroy', $employee->id], 'method' => 'delete']) !!}
+                {!! Form::open(['route' => ['employees.destroy', $employee->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>
                     <a href="{!! route('employees.show', [$employee->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-eye-open"></i></a>
                     <a href="{!! route('employees.edit', [$employee->id]) !!}" class='btn btn-default btn-xs'><i class="glyphicon glyphicon-edit"></i></a>

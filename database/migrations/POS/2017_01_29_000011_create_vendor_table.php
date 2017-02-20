@@ -21,9 +21,7 @@ class CreateVendorTable extends Migration
             $table->softDeletes();
 
             $table->foreign('address_id', 'FK_Vendor_Address')
-                ->references('id')->on('addresses')
-                ->onDelete('no action')
-                ->onUpdate('no action');
+                ->references('id')->on('addresses');
         });
     }
 
