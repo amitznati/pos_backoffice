@@ -33,3 +33,11 @@ Route::resource('groups', 'groupController');
 Route::resource('products', 'ProductController');
 
 Route::post('products/search', ['as' => 'products.search' , 'uses' => 'ProductController@search']);
+
+
+
+
+
+Route::resource('people', 'PersonController');
+
+Route::resource('employees', 'EmployeeController');

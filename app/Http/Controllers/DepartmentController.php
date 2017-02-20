@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatedepartmentRequest;
 use App\Http\Requests\UpdatedepartmentRequest;
-use App\Repositories\departmentRepository;
+use App\Repositories\DepartmentRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
@@ -16,7 +16,7 @@ class DepartmentController extends AppBaseController
     /** @var  departmentRepository */
     private $departmentRepository;
 
-    public function __construct(departmentRepository $departmentRepo)
+    public function __construct(DepartmentRepository $departmentRepo)
     {
         $this->departmentRepository = $departmentRepo;
     }

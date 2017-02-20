@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreategroupRequest;
 use App\Http\Requests\UpdategroupRequest;
-use App\Repositories\groupRepository;
+use App\Repositories\GroupRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
@@ -16,7 +16,7 @@ class GroupController extends AppBaseController
     /** @var  groupRepository */
     private $groupRepository;
 
-    public function __construct(groupRepository $groupRepo)
+    public function __construct(GroupRepository $groupRepo)
     {
         $this->groupRepository = $groupRepo;
     }
