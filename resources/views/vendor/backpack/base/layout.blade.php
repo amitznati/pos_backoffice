@@ -111,6 +111,8 @@
     <script src="{{ asset('vendor/adminlte'.$localeStr.'/') }}/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <script src="{{ asset('vendor/adminlte'.$localeStr.'/') }}/plugins/fastclick/fastclick.js"></script>
     <script src="{{ asset('vendor/adminlte'.$localeStr.'/') }}/dist/js/app.min.js"></script>
+    {{-- Vue.js --}}
+    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script> --}}
 
     <!-- page script -->
     <script type="text/javascript">

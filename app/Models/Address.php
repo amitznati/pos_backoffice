@@ -57,7 +57,7 @@ class Address extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function people()
+    public function person()
     {
         return $this->belongsTo(\App\Models\Person::class);
     }
@@ -65,7 +65,7 @@ class Address extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function vendors()
+    public function vendor()
     {
         return $this->belongsTo(\App\Models\Vendor::class);
     }

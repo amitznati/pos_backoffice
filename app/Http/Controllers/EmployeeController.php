@@ -12,6 +12,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use App\Models\Person;
 use App\Models\Employee;
+use App\Models\Address;
 
 class EmployeeController extends AppBaseController
 {
@@ -65,6 +66,9 @@ class EmployeeController extends AppBaseController
 		$employee->save();
 		$person->personable()->associate($employee);
 		$person->save();
+        $address = new Address($input);
+        $address->save();
+        $address->person()->associate($person);
         Flash::success('Employee saved successfully.');
 
         return redirect(route('employees.index'));
