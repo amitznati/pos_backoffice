@@ -3,7 +3,7 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Employee
+            Contact
         </h1>
    </section>
    <div class="content">
@@ -11,13 +11,13 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($employee, ['route' => ['employees.update', $employee->id], 'method' => 'patch']) !!}
+                   {!! Form::model($contact, ['route' => ['contacts.update', $contact->id], 'method' => 'patch']) !!}
 
                         @include('people.fields')
                         <!-- Submit Field -->
                         <div class="form-group col-sm-12">
                             {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-                            <a href="{!! route('employees.index') !!}" class="btn btn-default">Cancel</a>
+                            <a href="{!! route('contacts.index') !!}" class="btn btn-default">Cancel</a>
                         </div>
 
                    {!! Form::close() !!}

@@ -34,7 +34,7 @@
     <p>{!! $address->zip !!}</p>
 </div>
 
-<!-- Created At Field -->
+{{-- <!-- Created At Field -->
 <div class="form-group">
     {!! Form::label('created_at', 'Created At:') !!}
     <p>{!! $address->created_at !!}</p>
@@ -50,5 +50,5 @@
 <div class="form-group">
     {!! Form::label('deleted_at', 'Deleted At:') !!}
     <p>{!! $address->deleted_at !!}</p>
-</div>
+</div> --}}
 

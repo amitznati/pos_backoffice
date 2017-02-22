@@ -41,3 +41,5 @@ Route::post('products/search', ['as' => 'products.search' , 'uses' => 'ProductCo
 Route::resource('people', 'PersonController');
 
 Route::resource('employees', 'EmployeeController');
+
+Route::resource('contacts', 'ContactController');
