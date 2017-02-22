@@ -1,4 +1,4 @@
-<table class="table table-responsive table-hover table-condensed" id="employees-table">
+<table class="table table-{{$left}} table-responsive table-hover table-condensed" id="employees-table">
     <thead>
         <th>First Name</th>
         <th>Last Name</th>

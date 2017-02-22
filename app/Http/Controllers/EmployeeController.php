@@ -62,9 +62,11 @@ class EmployeeController extends AppBaseController
         $input = $request->all();
         
 		$employee = new Employee();
-		$person = new Person($input);
 		$employee->save();
+		$address = new Address($input);
+		$person = new Person($input);
 		$person->personable()->associate($employee);
+		$person->address()->save($address);
 		$person->save();
         $address = new Address($input);
         $address->save();
