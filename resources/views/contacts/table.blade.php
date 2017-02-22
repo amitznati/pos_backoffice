@@ -6,8 +6,7 @@
         <th>Birthday</th>
         <th>Phone</th>
         <th>Email</th>
-        <th>Address Id</th>
-        <th>Password</th>
+        <th>Identifier</th>
         <th colspan="3">Action</th>
     </thead>
     <tbody>
@@ -19,7 +18,7 @@
             <td>{!! $contact->person->birthday !!}</td>
             <td>{!! $contact->person->phone !!}</td>
             <td>{!! $contact->person->email !!}</td>
-            <td>{!! $contact->person->password !!}</td>
+            <td>{!! $contact->person->identifier !!}</td>
             <td>
                 {!! Form::open(['route' => ['contacts.destroy', $contact->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

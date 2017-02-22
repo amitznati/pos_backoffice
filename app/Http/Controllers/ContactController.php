@@ -59,15 +59,18 @@ class ContactController extends AppBaseController
     public function store(CreateContactRequest $request)
     {
         $input = $request->all();
-
+		xdebug_break();
+        //Contact
         $contact = new Contact();
-        $person = new Person($input);
         $contact->save();
+        //Person
+        $person = new Person($input);
         $person->personable()->associate($contact);
         $person->save();
-        $address = new Address($input);
+        //Address
+        $address = new Address($input);       
+        $address->addressable()->associate($person);
         $address->save();
-        $address->person()->associate($person);
 
         Flash::success('Contact saved successfully.');
 

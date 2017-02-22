@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Address
  * @package App\Models
- * @version February 20, 2017, 9:01 pm UTC
+ * @version February 22, 2017, 10:37 am UTC
  */
 class Address extends Model
 {
@@ -54,19 +54,9 @@ class Address extends Model
         
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function person()
+    public function addressable()
     {
-        return $this->belongsTo(\App\Models\Person::class);
+        return $this->morphTo('addressable');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     **/
-    public function vendor()
-    {
-        return $this->belongsTo(\App\Models\Vendor::class);
-    }
 }

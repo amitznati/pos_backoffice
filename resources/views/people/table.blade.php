@@ -7,7 +7,7 @@
         <th>Phone</th>
         <th>Email</th>
         <th>Address Id</th>
-        <th>Password</th>
+        <th>Identifier</th>
         <th>Personable Id</th>
         <th>Personable Type</th>
         <th colspan="3">Action</th>
@@ -22,7 +22,7 @@
             <td>{!! $person->phone !!}</td>
             <td>{!! $person->email !!}</td>
             <td>{!! $person->address_id !!}</td>
-            <td>{!! $person->password !!}</td>
+            <td>{!! $person->identifier !!}</td>
             <td>{!! $person->personable_id !!}</td>
             <td>{!! $person->personable_type !!}</td>
             <td>

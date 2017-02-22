@@ -16,12 +16,8 @@ class CreateVendorTable extends Migration
         Schema::create('vendors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('company_name', 50);
-            $table->integer('address_id')->unsigned()->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('address_id', 'FK_Vendor_Address')
-                ->references('id')->on('addresses');
         });
     }
 

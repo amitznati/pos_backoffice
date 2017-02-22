@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Person
  * @package App\Models
- * @version February 20, 2017, 2:33 pm UTC
+ * @version February 22, 2017, 10:36 am UTC
  */
 class Person extends Model
 {
@@ -31,7 +31,7 @@ class Person extends Model
         'phone',
         'email',
         'address_id',
-        'password',
+        'identifier',
         'personable_id',
         'personable_type'
     ];
@@ -50,7 +50,7 @@ class Person extends Model
         'phone' => 'string',
         'email' => 'string',
         'address_id' => 'integer',
-        'password' => 'string',
+        'identifier' => 'string',
         'personable_id' => 'integer',
         'personable_type' => 'string'
     ];
@@ -69,7 +69,7 @@ class Person extends Model
      **/
     public function address()
     {
-        return $this->hasOne(\App\Models\Address::class);
+        return $this->morphOne('App\Models\Address','addressable');
     }
 
     public function personable()

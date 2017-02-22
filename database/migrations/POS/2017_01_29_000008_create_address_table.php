@@ -20,6 +20,7 @@ class CreateAddressTable extends Migration
             $table->integer('hous_number')->unsigned()->nullable()->default(null);
             $table->string('city', 50)->nullable()->default(null);
             $table->integer('zip')->unsigned()->nullable()->default(null);
+            $table->morphs('addressable');
             $table->timestamps();
             $table->softDeletes();
         });

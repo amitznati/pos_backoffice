@@ -6,7 +6,7 @@
         <th>Birthday</th>
         <th>Phone</th>
         <th>Email</th>
-        <th>Password</th>
+        <th>Identifier</th>
         <th colspan="3">Action</th>
     </thead>
     <tbody>
@@ -18,7 +18,7 @@
             <td>{!! $employee->person->birthday !!}</td>
             <td>{!! $employee->person->phone !!}</td>
             <td>{!! $employee->person->email !!}</td>
-            <td>{!! $employee->person->password !!}</td>
+            <td>{!! $employee->person->identifier !!}</td>
             <td>
                 {!! Form::open(['route' => ['employees.destroy', $employee->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

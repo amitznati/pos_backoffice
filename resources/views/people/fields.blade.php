@@ -37,8 +37,8 @@
 
 <!-- Password Field -->
 <div class="form-group col-sm-4">
-    {!! Form::label('password', 'Password:') !!}
-    {!! Form::password('password', ['class' => 'form-control']) !!}
+    {!! Form::label('identifier', 'Identifier:') !!}
+    {!! Form::password('identifier', ['class' => 'form-control']) !!}
 </div>
 
 </div>

@@ -48,12 +48,10 @@ class Vendor extends Model
         
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     **/
+
     public function address()
     {
-        return $this->belongsTo(\App\Models\Address::class);
+        return $this->morphOne('App\Models\Address','addressable');
     }
 
     /**

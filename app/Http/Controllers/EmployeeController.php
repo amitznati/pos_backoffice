@@ -60,15 +60,17 @@ class EmployeeController extends AppBaseController
     {
     	xdebug_break();
         $input = $request->all();
-        
-		$employee = new Employee();
-		$person = new Person($input);
+        //Employee
+		$employee = new Employee();		
 		$employee->save();
+        //Person
+        $person = new Person($input);
 		$person->personable()->associate($employee);
 		$person->save();
-        $address = new Address($input);
+        //Address
+        $address = new Address($input);       
+        $address->addressable()->associate($person);
         $address->save();
-        $address->person()->associate($person);
         Flash::success('Employee saved successfully.');
 
         return redirect(route('employees.index'));
