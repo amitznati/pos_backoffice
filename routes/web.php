@@ -43,3 +43,5 @@ Route::resource('people', 'PersonController');
 Route::resource('employees', 'EmployeeController');
 
 Route::resource('contacts', 'ContactController');
+
+Route::resource('customers', 'CustomerController');

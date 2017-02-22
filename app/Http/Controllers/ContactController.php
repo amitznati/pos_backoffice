@@ -59,7 +59,6 @@ class ContactController extends AppBaseController
     public function store(CreateContactRequest $request)
     {
         $input = $request->all();
-		xdebug_break();
         //Contact
         $contact = new Contact();
         $contact->save();

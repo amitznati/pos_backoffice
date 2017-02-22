@@ -1,4 +1,4 @@
-<table class="table table-responsive" id="addresses-table">
+<table class="table table-{{$left}} table-responsive" id="addresses-table">
     <thead>
         <th>Street Name</th>
         <th>Street Number</th>

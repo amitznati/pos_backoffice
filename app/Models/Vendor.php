@@ -36,7 +36,6 @@ class Vendor extends Model
     protected $casts = [
         'id' => 'integer',
         'company_name' => 'string',
-        'address_id' => 'integer'
     ];
 
     /**
