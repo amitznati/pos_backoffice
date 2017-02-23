@@ -1,9 +1,3 @@
-{{-- <!-- Id Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('id', 'Id:') !!}
-    <p>{!! $address->id !!}</p>
-</div> --}}
-
 <!-- Street Name Field -->
 <div class="form-group col-sm-2">
     {!! Form::label('street_name', 'Street Name:') !!}
@@ -34,21 +28,4 @@
     <p>{!! $address->zip !!}</p>
 </div>
 
-{{-- <!-- Created At Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('created_at', 'Created At:') !!}
-    <p>{!! $address->created_at !!}</p>
-</div>
-
-<!-- Updated At Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('updated_at', 'Updated At:') !!}
-    <p>{!! $address->updated_at !!}</p>
-</div>
-
-<!-- Deleted At Field -->
-<div class="form-group col-sm-4">
-    {!! Form::label('deleted_at', 'Deleted At:') !!}
-    <p>{!! $address->deleted_at !!}</p>
-</div> --}}
 

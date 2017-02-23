@@ -42,6 +42,9 @@
               <li class="{{ Request::is('products*') ? 'active' : '' }}">
                   <a href="{!! route('products.index') !!}"><i class="fa fa-edit"></i><span>{{ trans('backpack::pos.products') }}</span></a>
               </li>
+              <li class="{{ Request::is('vendors*') ? 'active' : '' }}">
+                  <a href="{!! route('vendors.index') !!}"><i class="fa fa-edit"></i><span>Vendors</span></a>
+              </li>
             </ul>
           </li>
         <li class="treeview">

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Vendor
  * @package App\Models
- * @version February 16, 2017, 8:45 pm UTC
+ * @version February 23, 2017, 8:46 am UTC
  */
 class Vendor extends Model
 {
@@ -24,8 +24,7 @@ class Vendor extends Model
 
 
     public $fillable = [
-        'company_name',
-        'address_id'
+        'company_name'
     ];
 
     /**
@@ -35,7 +34,7 @@ class Vendor extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'company_name' => 'string',
+        'company_name' => 'string'
     ];
 
     /**
@@ -46,12 +45,6 @@ class Vendor extends Model
     public static $rules = [
         
     ];
-
-
-    public function address()
-    {
-        return $this->morphOne('App\Models\Address','addressable');
-    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -67,5 +60,10 @@ class Vendor extends Model
     public function contacts()
     {
         return $this->belongsToMany(\App\Models\Contact::class, 'rel_vandor_contact');
+    }
+
+    public function address()
+    {
+        return $this->morphOne('App\Models\Address','addressable');
     }
 }

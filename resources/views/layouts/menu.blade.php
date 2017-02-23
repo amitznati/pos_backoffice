@@ -85,3 +85,7 @@
     <a href="{!! route('customers.index') !!}"><i class="fa fa-edit"></i><span>Customers</span></a>
 </li>
 
+<li class="{{ Request::is('vendors*') ? 'active' : '' }}">
+    <a href="{!! route('vendors.index') !!}"><i class="fa fa-edit"></i><span>Vendors</span></a>
+</li>
+
