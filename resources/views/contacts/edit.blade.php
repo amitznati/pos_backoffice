@@ -12,7 +12,10 @@
            <div class="box-body">
                <div class="row">
                    {!! Form::model($contact, ['route' => ['contacts.update', $contact->id], 'method' => 'patch']) !!}
-
+                          <?php 
+                          $person = $contact->person;
+                          $address = $contact->person->address; 
+                          ?>
                         @include('people.fields')
                         <!-- Submit Field -->
                         <div class="form-group col-sm-12">

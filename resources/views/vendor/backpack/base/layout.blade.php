@@ -29,9 +29,10 @@
     <link rel="stylesheet" href="{{ asset('vendor/backpack/backpack.base.css') }}">
 
     @yield('after_styles')
+
     <style>
-        .table-right>thead>tr>th{text-align: right;}
-        .table-left>thead>tr>th{text-align: left;}
+        th {text-align: {{$left}}; }
+        .form-group{float: {{$left}}; }
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

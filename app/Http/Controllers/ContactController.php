@@ -112,7 +112,7 @@ class ContactController extends AppBaseController
 
             return redirect(route('contacts.index'));
         }
-
+        $contact->load('person.address');
         return view('contacts.edit')->with('contact', $contact);
     }
 

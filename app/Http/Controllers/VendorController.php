@@ -46,7 +46,8 @@ class VendorController extends AppBaseController
      */
     public function create()
     {
-        return view('vendors.create');
+        $contacts = Contact::all()->pluck('person.full_name','id');
+        return view('vendors.create')->withContacts($contacts);
     }
 
     /**
@@ -66,6 +67,8 @@ class VendorController extends AppBaseController
         $address = new Address($input);       
         $address->addressable()->associate($vendor);
         $address->save();
+        //Contacts
+        $vendor->contacts()->sync($request->contacts, false);
         Flash::success('Vendor saved successfully.');
 
         return redirect(route('vendors.index'));
@@ -107,8 +110,9 @@ class VendorController extends AppBaseController
 
             return redirect(route('vendors.index'));
         }
-
-        return view('vendors.edit')->with('vendor', $vendor);
+        $contacts = Contact::all()->pluck('person.full_name','id');
+        
+        return view('vendors.edit')->with('vendor', $vendor)->withContacts($contacts);
     }
 
     /**

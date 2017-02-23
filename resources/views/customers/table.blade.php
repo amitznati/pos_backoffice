@@ -1,4 +1,4 @@
-<table class="table table-{{$left}} table-responsive" id="customer-table">
+<table class="table table-responsive" id="customer-table">
     <thead>
         <th>First Name</th>
         <th>Last Name</th>

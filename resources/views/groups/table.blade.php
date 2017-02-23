@@ -1,4 +1,4 @@
-<table class="table-{{$left}} table table-responsive" id="groups-table" >
+<table class="table table-responsive" id="groups-table" >
     <thead>
         <th>{{trans('backpack::pos.group')}}</th>
         <th>{{trans('backpack::pos.department')}}</th>
