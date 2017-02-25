@@ -12,7 +12,7 @@
             <div class="box-body">
                 <div id="person_fields" class="row">
                     {!! Form::open(['route' => 'employees.store']) !!}
-
+                        @include('employees.fields')
                         @include('people.fields')
                         <!-- Submit Field -->
                         <div class="form-group col-sm-12">
@@ -27,4 +27,25 @@
 @endsection
 @section('after_scripts')
     @include('people.name_changed_script')
+    <script>
+        var roles =  {!!$roles!!} ;
+
+        $("input[name='role']").change(function(){
+            console.log('here');
+            $(':checkbox').each(function(i){
+              $(this).attr("disabled", false);
+              $(this).prop("checked", false);
+            });
+            var role_id = this.value;
+            var values = [];
+            roles.forEach(function(role){
+                if(role_id == role.id)
+                    role.permissions.forEach(function(permission){
+                        $("#permissions").find('[value=' + permission.id + ']').attr("disabled", true);
+                        $("#permissions").find('[value=' + permission.id + ']').prop("checked", false);
+                    });
+            });
+        });
+        
+    </script>
 @endsection

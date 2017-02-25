@@ -12,10 +12,10 @@ use Spatie\Permission\Traits\HasRoles;// <---------------------- and this one
  */
 class Employee extends Model
 {
-	use CrudTrait; // <----- this
-	use HasRoles; // <------ and this
+    use CrudTrait; // <----- this
+    use HasRoles; // <------ and this
 
-	public $timestamps = false;
+    public $timestamps = false;
     public $table = 'employees';
 
     public function person()
@@ -30,21 +30,21 @@ class Employee extends Model
         return $this->hasMany(\App\Models\DailyAttendance::class);
     }
 
-//     /**
-//      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-//      **/
-//     public function permissions()
-//     {
-//         return $this->belongsToMany(\App\Models\Permission::class, 'employee_has_permissions');
-//     }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     **/
+    public function permissions()
+    {
+        return $this->belongsToMany(\App\Models\Permission::class, 'employee_has_permissions');
+    }
 
-//     /**
-//      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-//      **/
-//     public function roles()
-//     {
-//         return $this->belongsToMany(\App\Models\Role::class, 'employee_has_roles');
-//     }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     **/
+    public function roles()
+    {
+        return $this->belongsToMany(\App\Models\Role::class, 'employee_has_roles');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

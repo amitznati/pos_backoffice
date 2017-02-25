@@ -13,6 +13,8 @@ use Response;
 use App\Models\Person;
 use App\Models\Employee;
 use App\Models\Address;
+use App\Models\Role;
+use App\Models\Permission;
 
 class EmployeeController extends AppBaseController
 {
@@ -46,7 +48,10 @@ class EmployeeController extends AppBaseController
      */
     public function create()
     {
-        return view('employees.create');
+        $roles = Role::all()->load('permissions');
+        $permissions = Permission::all();
+
+        return view('employees.create')->withPermissions($permissions)->withRoles($roles);
     }
 
     /**
@@ -58,11 +63,15 @@ class EmployeeController extends AppBaseController
      */
     public function store(CreateEmployeeRequest $request)
     {
-    	xdebug_break();
+        // dd($request);
+        xdebug_break();
         $input = $request->all();
         //Employee
 		$employee = new Employee();		
 		$employee->save();
+        $employee->roles()->sync($request->role, false);
+        if($request->permissions)
+            $employee->permissions()->sync($request->permissions, false);
         //Person
         $person = new Person($input);
 		$person->personable()->associate($employee);
