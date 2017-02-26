@@ -30,7 +30,7 @@
     <script>
         var roles =  {!!$roles!!} ;
 
-        $("input[name='role']").change(function(){
+        $("input[name='role[]']").change(function(){
             console.log('here');
             $(':checkbox').each(function(i){
               $(this).attr("disabled", false);

@@ -4,7 +4,7 @@
     <p>{!! $employee->id !!}</p>
 </div>
 
-<?php  $person = $contact->person ?>
+<?php  $person = $employee->person ?>
 
 @include('people.show_fields')
 

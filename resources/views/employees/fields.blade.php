@@ -1,7 +1,7 @@
 <!-- Roles Field -->
 <section class="content-header">
         <h4>
-            Roles
+            תפקיד
         </h4>
     </section>
 <div class="box-body">
@@ -18,7 +18,7 @@
 <!-- Permissions Field -->
 <section class="content-header">
         <h4>
-            Permissions
+            הרשאות נוספות
         </h4>
     </section>
 <div class="box-body">
