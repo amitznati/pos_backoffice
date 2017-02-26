@@ -15,6 +15,7 @@ use App\Models\Employee;
 use App\Models\Address;
 use App\Models\Role;
 use App\Models\Permission;
+use App\Models\SaleryType;
 
 class EmployeeController extends AppBaseController
 {
@@ -50,8 +51,8 @@ class EmployeeController extends AppBaseController
     {
         $roles = Role::all()->load('permissions');
         $permissions = Permission::all();
-
-        return view('employees.create')->withPermissions($permissions)->withRoles($roles);
+        $salery_types = SaleryType::all()->pluck('name','id');
+        return view('employees.create')->withPermissions($permissions)->withRoles($roles)->withSaleries($salery_types);
     }
 
     /**

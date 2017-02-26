@@ -1,8 +1,8 @@
 <!-- Roles Field -->
 <section class="content-header">
-        <h4>
+        <h2>
             תפקיד
-        </h4>
+        </h2>
     </section>
 <div class="box-body">
    <div class="row">
@@ -14,12 +14,12 @@
 		@endforeach
    </div>
 </div>
-<hr>
+
 <!-- Permissions Field -->
 <section class="content-header">
-        <h4>
+        <h2>
             הרשאות נוספות
-        </h4>
+        </h2>
     </section>
 <div class="box-body">
    <div class="row" id="permissions" >
@@ -31,4 +31,21 @@
 		@endforeach
    </div>
 </div>
-<hr>
+
+<section class="content-header">
+        <h2>
+            שכר
+        </h2>
+    </section>
+<div class="box-body">
+   <div class="row">
+    <div class="form-group col-sm-4">
+        {!! Form::label('salery_type_id', 'Salery Type:') !!}
+        {!! Form::select('salery_type_id', $saleries, null, ['class' => 'form-control']) !!}
+    </div>
+    <div class="form-group col-sm-4">
+        {!! Form::label('amount', 'Amount:') !!}
+        {!! Form::text('amount', null, ['class' => 'form-control']) !!}
+    </div>
+   </div>
+</div>

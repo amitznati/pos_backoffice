@@ -1,3 +1,8 @@
+<section class="content-header">
+    <h2>
+        פרטים אישיים
+    </h2>
+</section>
 <!-- First Name Field -->
 <div class="form-group col-sm-4">
     {!! Form::label('first_name', 'First Name:') !!}

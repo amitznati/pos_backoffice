@@ -47,3 +47,5 @@ Route::resource('contacts', 'ContactController');
 Route::resource('customers', 'CustomerController');
 
 Route::resource('vendors', 'VendorController');
+
+Route::resource('saleryTypes', 'SaleryTypeController');
