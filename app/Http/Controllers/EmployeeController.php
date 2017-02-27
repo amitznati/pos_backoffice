@@ -16,6 +16,7 @@ use App\Models\Address;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Models\SaleryType;
+use App\Models\EmployeeSalery;
 
 class EmployeeController extends AppBaseController
 {
@@ -70,9 +71,16 @@ class EmployeeController extends AppBaseController
         //Employee
 		$employee = new Employee();		
 		$employee->save();
-        $employee->roles()->sync($request->role, false);
+        //Role
+        if($request->role)
+            $employee->roles()->sync($request->role, false);
+        //Permissions
         if($request->permissions)
             $employee->permissions()->sync($request->permissions, false);
+        //Salery
+        $employee_salery = new EmployeeSalery($input);
+        $employee_salery->employee()->associate($employee);
+        $employee_salery->save();
         //Person
         $person = new Person($input);
 		$person->personable()->associate($employee);

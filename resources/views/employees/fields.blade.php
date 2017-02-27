@@ -36,16 +36,20 @@
         <h2>
             שכר
         </h2>
+        <div class="form-group col-sm-12">
+       		{!! Form::checkbox('add_salery', 'checked') !!}
+		    {!! Form::label('add_salery', 'Add Salery' ) !!}
+		</div>
     </section>
 <div class="box-body">
-   <div class="row">
+   <div class="row" id="salery-div" >
     <div class="form-group col-sm-4">
         {!! Form::label('salery_type_id', 'Salery Type:') !!}
-        {!! Form::select('salery_type_id', $saleries, null, ['class' => 'form-control']) !!}
+        {!! Form::select('salery_type_id', $saleries, null, ['class' => 'form-control','disabled' => true]) !!}
     </div>
     <div class="form-group col-sm-4">
         {!! Form::label('amount', 'Amount:') !!}
-        {!! Form::text('amount', null, ['class' => 'form-control']) !!}
+        {!! Form::number('amount', 0, ['class' => 'form-control currency','min' => 0, 'step' => '0.01','disabled' => true]) !!}
     </div>
    </div>
 </div>

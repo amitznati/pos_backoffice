@@ -29,9 +29,8 @@
     @include('people.name_changed_script')
     <script>
         var roles =  {!!$roles!!} ;
-
+        //Role selection changed
         $("input[name='role[]']").change(function(){
-            console.log('here');
             $(':checkbox').each(function(i){
               $(this).attr("disabled", false);
               $(this).prop("checked", false);
@@ -45,7 +44,13 @@
                         $("#permissions").find('[value=' + permission.id + ']').prop("checked", false);
                     });
             });
+        });//End Role Selection changed
+
+        //Salery fields enable/disable
+        var disabled = false;
+        $("input[name='add_salery']").change(function(){
+            $('#salery-div *').prop('disabled',disabled);
+            disabled = !disabled;
         });
-        
     </script>
 @endsection
