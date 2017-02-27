@@ -19,8 +19,17 @@
 		</div>
 
 
+		<h4>
+            הרשאות
+        </h4>
+		@foreach($employee->roles()->first()->permissions as $permission)
+       	<div class="form-group col-sm-12">       		
+       		<p>{!! $permission->name !!}</p>   
+		</div>
+		@endforeach
 
 <!-- Permissions Field -->
+@if($employee->permissions()->count() >0)
         <h4>
             הרשאות נוספות
         </h4>
@@ -28,11 +37,10 @@
 
 		@foreach($employee->permissions as $permission)
        	<div class="form-group col-sm-12">
-       		{!! Form::label('permission', $permission->name ) !!}
        		<p>{!! $permission->name !!}</p>   
 		</div>
 		@endforeach
-
+@endif
 
 
 

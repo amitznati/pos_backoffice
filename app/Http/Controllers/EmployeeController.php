@@ -66,7 +66,7 @@ class EmployeeController extends AppBaseController
     public function store(CreateEmployeeRequest $request)
     {
         // dd($request);
-        xdebug_break();
+
         $input = $request->all();
         //Employee
 		$employee = new Employee();		
