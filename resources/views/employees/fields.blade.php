@@ -46,7 +46,7 @@
       </thead>
       <tbody>
       @foreach($employee->employeeSaleries as $salery)
-          <tr>
+          <tr style="{{$salery->deleted_at != null ? 'text-decoration: line-through' : ''}}">
               <td>{!! $salery->saleryType->name !!}</td>
               <td>{!! $salery->amount !!}</td>
               <td>{!! $salery->created_at !!}</td>
@@ -56,7 +56,7 @@
       </tbody>
   </table>
   @endif
-  <div class="form-group col-sm-12">
+  <div class="form-group col-sm-12" >
  		{!! Form::checkbox('add_salery', 'checked') !!}
     {!! Form::label('add_salery', isset($employee) ? 'Update Salery' : 'Add Salery' ) !!}
   </div>
@@ -65,11 +65,11 @@
    <div class="row" id="salery-div" >
     <div class="form-group col-sm-4">
         {!! Form::label('salery_type_id', 'Salery Type:') !!}
-        {!! Form::select('salery_type_id', $saleries, null, ['class' => 'form-control','disabled' => true]) !!}
+        {!! Form::select('salery_type_id', $saleries, null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group col-sm-4">
         {!! Form::label('amount', 'Amount:') !!}
-        {!! Form::number('amount', 0, ['class' => 'form-control currency','min' => 0, 'step' => '0.01','disabled' => true]) !!}
+        {!! Form::number('amount', 0, ['class' => 'form-control currency','min' => 0, 'step' => '0.01']) !!}
     </div>
    </div>
 </div>

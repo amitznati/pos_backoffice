@@ -46,6 +46,8 @@
     {!! Form::text('identifier',isset($person) ? $person->identifier : null, ['class' => 'form-control']) !!}
 </div>
 
+<!-- Address Fields -->
+
 </div>
     </div>
     <section class="content-header">
@@ -53,6 +55,11 @@
             Address
         </h1>
     </section>
+
     <div class="box-body">
-        <div class="row">            
+        <div class="form-group col-sm-12" id="address_check">
+            <input type="checkbox" name="add_address">
+            {!! Form::label('add_address', isset($employee) ? 'Update Address' : 'Add Address' ) !!}
+        </div>
+        <div class="row" id="address-div">            
             @include('addresses.fields')

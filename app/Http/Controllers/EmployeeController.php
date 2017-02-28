@@ -67,29 +67,31 @@ class EmployeeController extends AppBaseController
     {
         //dd($request);
         $this->validate($request,array(
-                'first_name'       => 'required|max:255|min:2',
-                'last_name'        => 'required|max:255|min:2',
-                'identifier'       => 'required|min:4|max:255|unique:persons,identifier',
-                'roles[]'          => 'array|size:1',
-                'amount'       => 'between:0,99999',
+                'first_name'       => 'required|max:50|min:2',
+                'last_name'        => 'required|max:50|min:2',
+                'identifier'       => 'required|min:4|max:50|unique:persons,identifier',
+                'role'             => 'required|size:1',
         ));
         if($request->add_salery == 'checked')
         {
-             $this->validate($request,array(
-                'amount'       => 'between:0,99999',
+            $this->validate($request,array(
+                'amount'           => 'required|numeric|between:0,999999.99',
             ));
         }
         dd($request);
         $input = $request->all();
+
         //Employee
 		$employee = new Employee();		
 		$employee->save();
+
         //Role
-        if($request->role)
-            $employee->roles()->sync($request->role, false);
+        $employee->roles()->sync($request->role, false);
+
         //Permissions
         if($request->permissions)
             $employee->permissions()->sync($request->permissions, false);
+
         //Salery
         if($request->add_salery == 'checked')
         {
@@ -97,14 +99,19 @@ class EmployeeController extends AppBaseController
             $employee_salery->employee()->associate($employee);
             $employee_salery->save();
         }
+
         //Person
         $person = new Person($input);
 		$person->personable()->associate($employee);
 		$person->save();
+
         //Address
-        $address = new Address($input);       
-        $address->addressable()->associate($person);
-        $address->save();
+        if($request->add_address == 'checked')
+        {
+            $address = new Address($input);       
+            $address->addressable()->associate($person);
+            $address->save();
+        }
         Flash::success('Employee saved successfully.');
 
         return redirect(route('employees.index'));

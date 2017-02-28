@@ -27,30 +27,6 @@
 @endsection
 @section('after_scripts')
     @include('people.name_changed_script')
-    <script>
-        var roles =  {!!$roles!!} ;
-        //Role selection changed
-        $("input[name='role[]']").change(function(){
-            $(':checkbox').each(function(i){
-              $(this).attr("disabled", false);
-              $(this).prop("checked", false);
-            });
-            var role_id = this.value;
-            var values = [];
-            roles.forEach(function(role){
-                if(role_id == role.id)
-                    role.permissions.forEach(function(permission){
-                        $("#permissions").find('[value=' + permission.id + ']').attr("disabled", true);
-                        $("#permissions").find('[value=' + permission.id + ']').prop("checked", false);
-                    });
-            });
-        });//End Role Selection changed
-
-        //Salery fields enable/disable
-        var disabled = false;
-        $("input[name='add_salery']").change(function(){
-            $('#salery-div *').prop('disabled',disabled);
-            disabled = !disabled;
-        });
-    </script>
+    @include('employees.role_changed_script')
+    @include('people.address_check_script')
 @endsection
