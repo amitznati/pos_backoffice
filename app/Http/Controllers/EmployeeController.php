@@ -65,8 +65,21 @@ class EmployeeController extends AppBaseController
      */
     public function store(CreateEmployeeRequest $request)
     {
-        // dd($request);
-
+        //dd($request);
+        $this->validate($request,array(
+                'first_name'       => 'required|max:255|min:2',
+                'last_name'        => 'required|max:255|min:2',
+                'identifier'       => 'required|min:4|max:255|unique:persons,identifier',
+                'roles[]'          => 'array|size:1',
+                'amount'       => 'between:0,99999',
+        ));
+        if($request->add_salery == 'checked')
+        {
+             $this->validate($request,array(
+                'amount'       => 'between:0,99999',
+            ));
+        }
+        dd($request);
         $input = $request->all();
         //Employee
 		$employee = new Employee();		
@@ -78,9 +91,12 @@ class EmployeeController extends AppBaseController
         if($request->permissions)
             $employee->permissions()->sync($request->permissions, false);
         //Salery
-        $employee_salery = new EmployeeSalery($input);
-        $employee_salery->employee()->associate($employee);
-        $employee_salery->save();
+        if($request->add_salery == 'checked')
+        {
+            $employee_salery = new EmployeeSalery($input);
+            $employee_salery->employee()->associate($employee);
+            $employee_salery->save();
+        }
         //Person
         $person = new Person($input);
 		$person->personable()->associate($employee);
@@ -124,14 +140,17 @@ class EmployeeController extends AppBaseController
     public function edit($id)
     {
         $employee = $this->employeeRepository->findWithoutFail($id);
-
+        $employee->load('employeeSaleries');
         if (empty($employee)) {
             Flash::error('Employee not found');
 
             return redirect(route('employees.index'));
         }
+        $roles = Role::all()->load('permissions');
+        $permissions = Permission::all();
+        $salery_types = SaleryType::all()->pluck('name','id');
 
-        return view('employees.edit')->with('employee', $employee);
+        return view('employees.edit')->with('employee', $employee)->withPermissions($permissions)->withRoles($roles)->withSaleries($salery_types);
     }
 
     /**

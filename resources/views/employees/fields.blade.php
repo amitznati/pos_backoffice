@@ -9,7 +9,7 @@
 		@foreach($roles as $role)
        	<div class="form-group col-sm-3">
        		{!! Form::radio('role[]', $role->id) !!}
-		    {!! Form::label('role', $role->name ) !!}
+		      {!! Form::label('role', $role->name ) !!}
 		</div>
 		@endforeach
    </div>
@@ -33,14 +33,34 @@
 </div>
 
 <section class="content-header">
-        <h2>
-            שכר
-        </h2>
-        <div class="form-group col-sm-12">
-       		{!! Form::checkbox('add_salery', 'checked') !!}
-		    {!! Form::label('add_salery', 'Add Salery' ) !!}
-		</div>
-    </section>
+  <h2>
+      שכר
+  </h2>
+  @if(isset($employee))
+  <table class="table table-responsive table-hover table-condensed">
+      <thead>
+          <th>Salery Type</th>
+          <th>Amount</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+      </thead>
+      <tbody>
+      @foreach($employee->employeeSaleries as $salery)
+          <tr>
+              <td>{!! $salery->saleryType->name !!}</td>
+              <td>{!! $salery->amount !!}</td>
+              <td>{!! $salery->created_at !!}</td>
+              <td>{!! $salery->deleted_at !!}</td>
+          </tr>
+      @endforeach
+      </tbody>
+  </table>
+  @endif
+  <div class="form-group col-sm-12">
+ 		{!! Form::checkbox('add_salery', 'checked') !!}
+    {!! Form::label('add_salery', isset($employee) ? 'Update Salery' : 'Add Salery' ) !!}
+  </div>
+</section>
 <div class="box-body">
    <div class="row" id="salery-div" >
     <div class="form-group col-sm-4">

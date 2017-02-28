@@ -14,8 +14,9 @@
                    {!! Form::model($employee, ['route' => ['employees.update', $employee->id], 'method' => 'patch']) !!}
                         <?php 
                           $person = $employee->person;
-                          $address = $employee->person->address; 
+                          $address = $employee->person->address;
                         ?>
+                        @include('employees.fields')
                         @include('people.fields')
                         <!-- Submit Field -->
                         <div class="form-group col-sm-12">
