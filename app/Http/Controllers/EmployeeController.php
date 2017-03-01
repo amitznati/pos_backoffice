@@ -170,8 +170,7 @@ class EmployeeController extends AppBaseController
         }
 
         $input = $request->all();
-        
-        if($employee->person->identifier != $input->identifier)
+        if($employee->person->identifier != $request->identifier)
         {
             $identifier_validation = 'required|min:4|max:50|unique:persons,identifier';
         }
@@ -201,11 +200,11 @@ class EmployeeController extends AppBaseController
             $employee->permissions()->detach();
             $employee->permissions()->sync($request->permissions, false);
         }
-
+        
         //Salery
         if($request->add_salery == 'checked')
         {
-        	$employee->employeeSaleries()->whereNull('deleted_at')->delete();
+        	$employee->employeeSaleries()->delete();
             $employee_salery = new EmployeeSalery($input);
             $employee_salery->employee()->associate($employee);
             $employee_salery->save();
