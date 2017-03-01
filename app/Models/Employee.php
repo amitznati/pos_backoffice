@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent as Model;
 use Backpack\CRUD\CrudTrait; // <------------------------------- this one
 use Spatie\Permission\Traits\HasRoles;// <---------------------- and this one
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Employee
  * @package App\Models
@@ -12,11 +13,14 @@ use Spatie\Permission\Traits\HasRoles;// <---------------------- and this one
  */
 class Employee extends Model
 {
+    use SoftDeletes;
     use CrudTrait; // <----- this
     use HasRoles; // <------ and this
 
     public $timestamps = false;
     public $table = 'employees';
+
+    protected $dates = ['deleted_at'];
 
     public function person()
     {

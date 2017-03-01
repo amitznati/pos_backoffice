@@ -49,15 +49,15 @@
         </h4>
 
 
-
-    <div class="form-group col-sm-3">
+@include('employees.salery_table')
+    {{-- <div class="form-group col-sm-3">
         {!! Form::label('salery_type_id', 'Salery Type:') !!}
         <p>{!! $employee->employeeSaleries->first()->saleryType->name !!}</p>
     </div>
     <div class="form-group col-sm-9">
         {!! Form::label('amount', 'Amount:') !!}
         <p>{!! $employee->employeeSaleries->first()->amount !!}</p>
-    </div>
+    </div> --}}
 
 
         <h4>

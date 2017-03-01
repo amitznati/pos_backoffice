@@ -12,6 +12,7 @@
                 <div class="row" style="padding-{{$left}}: 20px">
                     @include('employees.show_fields')
                     <a href="{!! route('employees.index') !!}" class="btn btn-default">Back</a>
+                    <a href="{!! route('employees.edit', [$employee->id]) !!}" class='btn btn-default'>Edit<i class="glyphicon glyphicon-edit"></i></a>
                 </div>
             </div>
         </div>

@@ -33,5 +33,4 @@
 @section('after_scripts')
     @include('people.name_changed_script')
     @include('employees.role_changed_script')
-    @include('people.address_check_script')
 @endsection

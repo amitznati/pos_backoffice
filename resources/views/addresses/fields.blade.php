@@ -1,4 +1,4 @@
-<div id="address-div">
+
     
 
 <!-- Street Name Field -->
@@ -31,4 +31,4 @@
     {!! Form::number('zip', isset($address) ? $address->zip : 0, ['class' => 'form-control']) !!}
 </div>
 
-</div>
+

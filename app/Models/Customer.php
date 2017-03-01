@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Eloquent as Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Customer
  * @package App\Models
@@ -11,6 +11,8 @@ use Eloquent as Model;
  */
 class Customer extends Model
 {
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
     public $timestamps = false;
 
     public function person()

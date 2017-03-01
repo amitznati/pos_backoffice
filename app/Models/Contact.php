@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Eloquent as Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * Class Contact
  * @package App\Models
@@ -11,8 +11,10 @@ use Eloquent as Model;
  */
 class Contact extends Model
 {
+    use SoftDeletes;
     public $timestamps = false;
 
+    protected $dates = ['deleted_at'];
     public function person()
     {
         return $this->morphOne('App\Models\Person','personable');

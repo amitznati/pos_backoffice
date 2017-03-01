@@ -53,6 +53,7 @@ class EmployeeController extends AppBaseController
         $roles = Role::all()->load('permissions');
         $permissions = Permission::all();
         $salery_types = SaleryType::all()->pluck('name','id');
+
         return view('employees.create')->withPermissions($permissions)->withRoles($roles)->withSaleries($salery_types);
     }
 
@@ -71,15 +72,11 @@ class EmployeeController extends AppBaseController
                 'last_name'        => 'required|max:50|min:2',
                 'identifier'       => 'required|min:4|max:50|unique:persons,identifier',
                 'role'             => 'required|size:1',
+        		'amount'           => 'required|numeric|between:0,999999.99',
         ));
-        if($request->add_salery == 'checked')
-        {
-            $this->validate($request,array(
-                'amount'           => 'required|numeric|between:0,999999.99',
-            ));
-        }
+
         $input = $request->all();
-        xdebug_break();
+        //xdebug_break();
         //Employee
 		$employee = new Employee();		
 		$employee->save();
@@ -92,12 +89,9 @@ class EmployeeController extends AppBaseController
             $employee->permissions()->sync($request->permissions, false);
 
         //Salery
-        if($request->add_salery == 'checked')
-        {
-            $employee_salery = new EmployeeSalery($input);
-            $employee_salery->employee()->associate($employee);
-            $employee_salery->save();
-        }
+        $employee_salery = new EmployeeSalery($input);
+        $employee_salery->employee()->associate($employee);
+        $employee_salery->save();
 
         //Person
         $person = new Person($input);
@@ -105,12 +99,10 @@ class EmployeeController extends AppBaseController
 		$person->save();
 
         //Address
-        if($request->add_address == 'checked')
-        {
-            $address = new Address($input);       
-            $address->addressable()->associate($person);
-            $address->save();
-        }
+        $address = new Address($input);       
+        $address->addressable()->associate($person);
+        $address->save();
+
         Flash::success('Employee saved successfully.');
 
         return redirect(route('employees.index'));
@@ -179,21 +171,24 @@ class EmployeeController extends AppBaseController
 
         $input = $request->all();
         
+        if($employee->person->identifier != $input->identifier)
+        {
+            $identifier_validation = 'required|min:4|max:50|unique:persons,identifier';
+        }
+        else
+        {
+            $identifier_validation = '';
+        }
         $this->validate($request,array(
         		'first_name'       => 'required|max:50|min:2',
         		'last_name'        => 'required|max:50|min:2',
-        		'identifier'       => 'required|min:4|max:50|unique:persons,identifier',
+        		'identifier'       => $identifier_validation,
         		'role'             => 'required|size:1',
+        		'amount'           => 'required|numeric|between:0,999999.99',
         ));
-        if($request->add_salery == 'checked')
-        {
-        	$this->validate($request,array(
-        			'amount'           => 'required|numeric|between:0,999999.99',
-        	));
-        }
         
         //Role
-        if(!$employee->hasRole(App\Models\Role::find($request->role[0])->name))
+        if(!$employee->hasRole(Role::find($request->role[0])->name))
         {
             $employee->roles()->detach();
             $employee->roles()->sync($request->role, false);
@@ -220,17 +215,7 @@ class EmployeeController extends AppBaseController
         $employee->person->update($input);
 
         //Address
-        if($request->add_address == 'checked')
-        {
-            if($employee->person->address)
-                $employee->person->address->update($input);
-            else
-            {
-                $address = new Address($input);       
-                $address->addressable()->associate($employee->person);
-                $address->save();
-            }
-        }
+        $employee->person->address->update($input);
 
         Flash::success('Employee updated successfully.');
 

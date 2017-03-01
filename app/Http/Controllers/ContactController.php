@@ -59,6 +59,13 @@ class ContactController extends AppBaseController
     public function store(CreateContactRequest $request)
     {
         $input = $request->all();
+        
+        $this->validate($request,array(
+        		'first_name'       => 'required|max:50|min:2',
+        		'last_name'        => 'required|max:50|min:2',
+        		'identifier'       => 'required|min:4|max:50|unique:persons,identifier',
+        ));
+        
         //Contact
         $contact = new Contact();
         $contact->save();
@@ -133,8 +140,28 @@ class ContactController extends AppBaseController
 
             return redirect(route('contacts.index'));
         }
+        
+        $input = $request->all();
+        
+        if($contact->person->identifier != $input->identifier)
+        {
+        	$identifier_validation = 'required|min:4|max:50|unique:persons,identifier';
+        }
+        else
+        {
+        	$identifier_validation = '';
+        }
+        $this->validate($request,array(
+        		'first_name'       => 'required|max:50|min:2',
+        		'last_name'        => 'required|max:50|min:2',
+        		'identifier'       => $identifier_validation,
+        ));
 
-        $contact = $this->contactRepository->update($request->all(), $id);
+        //Person
+        $contact->person->update($input);
+        
+        //Address
+        $contact->person->address->update($input);
 
         Flash::success('Contact updated successfully.');
 

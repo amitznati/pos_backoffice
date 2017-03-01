@@ -59,8 +59,15 @@ class CustomerController extends AppBaseController
     public function store(CreateCustomerRequest $request)
     {
         $input = $request->all();
+        
+        $this->validate($request,array(
+        		'first_name'       => 'required|max:50|min:2',
+        		'last_name'        => 'required|max:50|min:2',
+        		'identifier'       => 'required|min:4|max:50|unique:persons,identifier',
+        ));
+        
         //Customer
-        $customer = new Contact();
+        $customer = new Customer();
         $customer->save();
         //Person
         $person = new Person($input);
@@ -134,7 +141,27 @@ class CustomerController extends AppBaseController
             return redirect(route('customers.index'));
         }
 
-        $customer = $this->customerRepository->update($request->all(), $id);
+        $input = $request->all();
+        
+        if($customer->person->identifier != $input->identifier)
+        {
+        	$identifier_validation = 'required|min:4|max:50|unique:persons,identifier';
+        }
+        else
+        {
+        	$identifier_validation = '';
+        }
+        $this->validate($request,array(
+        		'first_name'       => 'required|max:50|min:2',
+        		'last_name'        => 'required|max:50|min:2',
+        		'identifier'       => $identifier_validation,
+        ));
+        
+        //Person
+        $customer->person->update($input);
+        
+        //Address
+        $customer->person->address->update($input);
 
         Flash::success('Customer updated successfully.');
 
