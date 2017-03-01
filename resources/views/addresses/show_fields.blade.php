@@ -1,3 +1,4 @@
+@if(isset($address))
 <!-- Street Name Field -->
 <div class="form-group col-sm-2">
     {!! Form::label('street_name', 'Street Name:') !!}
@@ -28,4 +29,4 @@
     <p>{!! $address->zip !!}</p>
 </div>
 
-
+@endif

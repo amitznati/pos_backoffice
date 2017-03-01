@@ -78,9 +78,8 @@ class EmployeeController extends AppBaseController
                 'amount'           => 'required|numeric|between:0,999999.99',
             ));
         }
-        dd($request);
         $input = $request->all();
-
+        xdebug_break();
         //Employee
 		$employee = new Employee();		
 		$employee->save();
@@ -133,7 +132,7 @@ class EmployeeController extends AppBaseController
 
             return redirect(route('employees.index'));
         }
-
+		//xdebug_break();
         return view('employees.show')->with('employee', $employee);
     }
 
@@ -156,7 +155,7 @@ class EmployeeController extends AppBaseController
         $roles = Role::all()->load('permissions');
         $permissions = Permission::all();
         $salery_types = SaleryType::all()->pluck('name','id');
-
+		//xdebug_break();
         return view('employees.edit')->with('employee', $employee)->withPermissions($permissions)->withRoles($roles)->withSaleries($salery_types);
     }
 
@@ -178,7 +177,60 @@ class EmployeeController extends AppBaseController
             return redirect(route('employees.index'));
         }
 
-        $employee = $this->employeeRepository->update($request->all(), $id);
+        $input = $request->all();
+        
+        $this->validate($request,array(
+        		'first_name'       => 'required|max:50|min:2',
+        		'last_name'        => 'required|max:50|min:2',
+        		'identifier'       => 'required|min:4|max:50|unique:persons,identifier',
+        		'role'             => 'required|size:1',
+        ));
+        if($request->add_salery == 'checked')
+        {
+        	$this->validate($request,array(
+        			'amount'           => 'required|numeric|between:0,999999.99',
+        	));
+        }
+        
+        //Role
+        if(!$employee->hasRole(App\Models\Role::find($request->role[0])->name))
+        {
+            $employee->roles()->detach();
+            $employee->roles()->sync($request->role, false);
+        }
+        
+
+        //Permissions
+        if($request->permissions)
+        {
+            $employee->permissions()->detach();
+            $employee->permissions()->sync($request->permissions, false);
+        }
+
+        //Salery
+        if($request->add_salery == 'checked')
+        {
+        	$employee->employeeSaleries()->whereNull('deleted_at')->delete();
+            $employee_salery = new EmployeeSalery($input);
+            $employee_salery->employee()->associate($employee);
+            $employee_salery->save();
+        }
+
+        //Person
+        $employee->person->update($input);
+
+        //Address
+        if($request->add_address == 'checked')
+        {
+            if($employee->person->address)
+                $employee->person->address->update($input);
+            else
+            {
+                $address = new Address($input);       
+                $address->addressable()->associate($employee->person);
+                $address->save();
+            }
+        }
 
         Flash::success('Employee updated successfully.');
 

@@ -58,8 +58,8 @@
 
     <div class="box-body">
         <div class="form-group col-sm-12" id="address_check">
-            <input type="checkbox" name="add_address">
+            {!! Form::checkbox('add_address', 'checked') !!}
             {!! Form::label('add_address', isset($employee) ? 'Update Address' : 'Add Address' ) !!}
         </div>
-        <div class="row" id="address-div">            
+        <div class="row">            
             @include('addresses.fields')

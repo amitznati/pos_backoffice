@@ -8,7 +8,7 @@
    <div class="row">
 		@foreach($roles as $role)
        	<div class="form-group col-sm-3">
-       		{!! Form::radio('role[]', $role->id) !!}
+       		{!! Form::radio('role[]', $role->id,(isset($employee) && $employee->hasRole($role->name)) ? ['checked' => 'checked'] : []) !!}
 		      {!! Form::label('role', $role->name ) !!}
 		</div>
 		@endforeach
@@ -25,7 +25,7 @@
    <div class="row" id="permissions" >
 		@foreach($permissions as $permission)
        	<div class="form-group col-sm-3">
-       		{!! Form::checkbox('permissions['.$permission->id .']', $permission->id) !!}
+       		{!! Form::checkbox('permissions['.$permission->id .']', $permission->id,(isset($employee) && $employee->permissions->contains($permission->id)) ? ['checked' => 'checked']:[]) !!}
 		    {!! Form::label('permission', $permission->name ) !!}
 		</div>
 		@endforeach
@@ -45,7 +45,7 @@
           <th>End Date</th>
       </thead>
       <tbody>
-      @foreach($employee->employeeSaleries as $salery)
+      @foreach($employee->employeeSaleries()->withTrashed()->get() as $salery)
           <tr style="{{$salery->deleted_at != null ? 'text-decoration: line-through' : ''}}">
               <td>{!! $salery->saleryType->name !!}</td>
               <td>{!! $salery->amount !!}</td>

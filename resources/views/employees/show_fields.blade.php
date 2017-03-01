@@ -60,6 +60,10 @@
     </div>
 
 
+        <h4>
+            פרטים אישיים
+        </h4>
+
 <?php  $person = $employee->person ?>
 @include('people.show_fields')
 

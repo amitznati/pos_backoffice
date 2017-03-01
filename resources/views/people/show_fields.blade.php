@@ -62,8 +62,11 @@
     <div class="row" >
         <!-- Address Id Field -->
         <div class="form-group col-sm-12">
-            <h1>Address</h1>
-            <?php $address = $person->address ?>
+
+                <h4>
+                    Address
+                </h4>
+            <?php $address = $person->address; ?>
             @include('addresses.show_fields')
         </div>
     </div>
