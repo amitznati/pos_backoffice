@@ -65,8 +65,10 @@ class ProductController extends AppBaseController
     {
     	
         $departments = Department::all()->load('groups');
-        $groups = $departments->first()->groups->pluck('name','id');
-        $vendors = Vendor::all()->pluck('name','id');
+        $groups = [];
+        if($departments->count() > 0)
+            $groups = $departments->first()->groups->pluck('name','id');
+        $vendors = Vendor::all()->pluck('company_name','id');
         return view('products.create')->withData(['departments' => $departments,'groups' => $groups,'vendors' => $vendors]);
     }
 
@@ -81,7 +83,7 @@ class ProductController extends AppBaseController
     {
         $input = $request->all();
         $product = $this->productRepository->create($input);
-		
+		$product->vendor()->sync($request->vendor_id);
         Flash::success('Product saved successfully.');
 
         return redirect(route('products.index'));

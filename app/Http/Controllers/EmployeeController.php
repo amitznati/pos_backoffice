@@ -170,6 +170,7 @@ class EmployeeController extends AppBaseController
         }
 
         $input = $request->all();
+        
         if($employee->person->identifier != $request->identifier)
         {
             $identifier_validation = 'required|min:4|max:50|unique:persons,identifier';

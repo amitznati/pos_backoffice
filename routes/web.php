@@ -49,3 +49,5 @@ Route::resource('customers', 'CustomerController');
 Route::resource('vendors', 'VendorController');
 
 Route::resource('saleryTypes', 'SaleryTypeController');
+
+Route::get('menu_design/index',['as' => 'menu_design.index', 'uses' => 'MenuDesignController@index']);

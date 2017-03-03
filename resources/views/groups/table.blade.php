@@ -8,7 +8,7 @@
     @foreach($groups as $group)
         <tr>
             <td>{!! $group->name !!}</td>
-            <td>{!! $group->department->name !!}</td>
+            <td>{!! $group->department ? $group->department->name : ''!!}</td>
             <td>
                 {!! Form::open(['route' => ['groups.destroy', $group->id], 'method' => 'delete']) !!}
                 <div class='btn-group'>

@@ -17,6 +17,14 @@
 
         <ul class="sidebar-menu">
           <li class="treeview">
+            <a href="#"><i class="fa fa-wrench"></i> <span>Display, Menu</span> <i class="fa fa-angle-{{$right}} pull-{{$right}}"></i></a>
+            <ul class="treeview-menu">
+              <li class="{{ Request::is('menu_design*') ? 'active' : '' }}">
+                  <a href="{!! route('menu_design.index') !!}"><i class="fa fa-edit"></i><span>Menu Design</span></a>
+              </li>
+            </ul>
+          </li>
+          <li class="treeview">
             <a href="#"><i class="fa fa-wrench"></i> <span>People</span> <i class="fa fa-angle-{{$right}} pull-{{$right}}"></i></a>
             <ul class="treeview-menu">
               <li class="{{ Request::is('employees*') ? 'active' : '' }}">
