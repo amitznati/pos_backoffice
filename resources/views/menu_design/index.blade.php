@@ -9,60 +9,34 @@
             /*background: lightgoldenrodyellow;*/
         }
 
-        .grid-stack-item-content {
-            color: #2c3e50;
-            text-align: center;
-            background-color: #18bc9c;
-        }
+       
 
-        .container-fixed { border: 1px solid red; }
-        .col {
-          border: 1px solid #ccc;
-         /* text-align: center;*/
-        }
-
-        .container-fixed {
-          bottom: 0;
-          position: fixed;
-          left: 0;
-          right: 0;
-          top: 0;
-        }
-
-        .container-fixed .col {
-          height: 100%;
-          overflow: auto;
-        }
-
-        .row-xs-12 { height: 100%; }
-        .row-xs-11 { height: 91.66666666666666%; }
-        .row-xs-10 { height: 83.33333333333334%; }
-        .row-xs-9 { height: 75%; }
-        .row-xs-8 { height: 66.66666666666666%; }
-        .row-xs-7 { height: 58.333333333333336%; }
-        .row-xs-6 { height: 50%; }
-        .row-xs-5 { height: 41.66666666666667%;}
-        .row-xs-4 { height: 33.33333333333333%;}
-        .row-xs-3 { height: 25%; }
-        .row-xs-2 { height: 16.666666666666664%; }
-        .row-xs-1 { height: 8.333333333333332%; }
     </style>
 @endsection
 @section('content')
-<section class="content-header">
-    <h1 >Float grid demo</h1>
-    <h1>
-       <a id="add-new-widget" class="btn btn-default" style="margin-bottom: 5px" href="#">Add Widget</a>
-    </h1>
-</section>
-<div class="content">
-    <div class="clearfix"></div>
+    <section class="content-header">
+        <h1 class="pull-{{$left}}">עיצוב תפריט</h1>
+        <h1 class="pull-{{$right}}">
+           <a class="btn btn-primary pull-{{$right}}" style="margin-top: -10px;margin-bottom: 5px" href="#">הוסף פריט</a>
+        </h1>
+    </section>
+    <div class="content">
+        <div class="clearfix"></div>
 
-    @include('flash::message')
+        @include('flash::message')
 
-    <div class="clearfix"></div>
-    <div class="box box-primary">
-        <div class="box-body content">
+        <div class="clearfix">
+            <div class="box-body">
+            <a id="select-item-show" class="btn btn-primary">הוסף פריט</a>
+                <div id="select-item-fields" class="row" style="display:none">
+                    @include('menu_design.select_item')
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="box box-primary">
+        <div class="box-body" style="height: 500px;">
             <div class="row-fluid" >
                 <div class="col-sm-10">
                     <div class="grid-stack">
@@ -87,6 +61,13 @@
 
     <script type="text/javascript">
         $(function () {
+
+             $('#select-item-show').click(function(){
+                $('#select-item-fields').toggle();
+             })
+             $("button[id^='select-product-id-']").click(function(){
+                console.log('here')
+             })
             var options = {
                 height : 6,
                 float: true

@@ -22,6 +22,9 @@
               <li class="{{ Request::is('menu_design*') ? 'active' : '' }}">
                   <a href="{!! route('menu_design.index') !!}"><i class="fa fa-edit"></i><span>Menu Design</span></a>
               </li>
+              <li class="{{ Request::is('menus*') ? 'active' : '' }}">
+                  <a href="{!! route('menus.index') !!}"><i class="fa fa-edit"></i><span>Menus</span></a>
+              </li>
             </ul>
           </li>
           <li class="treeview">
