@@ -53,4 +53,9 @@ class Menu extends Model
     {
         return $this->hasMany(\App\Models\DisplayInfo::class);
     }
+
+    public function displayInfo()
+    {
+        return $this->morphMany(\App\Models\DisplayInfo::class, 'displayable');
+    }
 }

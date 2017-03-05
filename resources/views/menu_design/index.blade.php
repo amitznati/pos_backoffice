@@ -34,21 +34,19 @@
             </div>
         </div>
 
-        <div class="clearfix"></div>
-        <div class="box box-primary">
-        <div class="box-body" style="height: 500px;">
-            <div class="row-fluid" >
-                <div class="col-sm-10">
-                    <div class="grid-stack">
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    
+        <div class="grid-stack-div">                  
+            <div class="clearfix"></div>
+            <div class="box box-primary">
+                <div class="box-body" style="height: 500px;">
+                    <div class="row-fluid" >
+                        <div class="col-sm-10">
+                            <div class="grid-stack">
+                            </div>
+                        </div>
+                    </div>                    
                 </div>
             </div>
-                    
         </div>
-    </div>
 </div>
     
 @endsection
@@ -61,13 +59,21 @@
 
     <script type="text/javascript">
         $(function () {
-
-             $('#select-item-show').click(function(){
+            var isSelectItemOpen = false;
+            $('#select-item-show').click(function(){
+                
                 $('#select-item-fields').toggle();
-             })
-             $("button[id^='select-product-id-']").click(function(){
+                $('.grid-stack-div').toggle();
+                console.log(isSelectItemOpen)
+                if(isSelectItemOpen)
+                    $('#select-item-show').text('הוסף פריט');
+                else
+                    $('#select-item-show').text('בטל הוספת פריט');
+                isSelectItemOpen = !isSelectItemOpen;
+            })
+            $("button[id^='select-product-id-']").click(function(){
                 console.log('here')
-             })
+            })
             var options = {
                 height : 6,
                 float: true

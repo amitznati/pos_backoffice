@@ -93,4 +93,9 @@ class Product extends Model
     {
         return $this->belongsToMany(\App\Models\Order::class, 'order_lines');
     }
+
+    public function displayInfo()
+    {
+        return $this->morphMany(\App\Models\DisplayInfo::class, 'displayable');
+    }
 }
