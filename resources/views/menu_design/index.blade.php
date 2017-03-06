@@ -8,6 +8,16 @@
         .grid-stack {
             /*background: lightgoldenrodyellow;*/
         }
+        .grid-stack-item{
+            
+
+        }
+        .grid-stack-item-content{
+            
+            text-align: center;
+            vertical-align: middle;
+            background: rgb(123, 150, 15);
+        }
 
        
 
@@ -37,9 +47,9 @@
         <div class="grid-stack-div">                  
             <div class="clearfix"></div>
             <div class="box box-primary">
-                <div class="box-body" style="height: 500px;">
+                <div class="box-body" style="height: 720px;">
                     <div class="row-fluid" >
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <div class="grid-stack">
                             </div>
                         </div>
@@ -59,55 +69,62 @@
 
     <script type="text/javascript">
         $(function () {
+            var currentMenu = {!! $currentMenu !!};
+            console.log(currentMenu);
             var isSelectItemOpen = false;
-            $('#select-item-show').click(function(){
-                
+
+            var itemClicked = function()
+            {
                 $('#select-item-fields').toggle();
                 $('.grid-stack-div').toggle();
-                console.log(isSelectItemOpen)
                 if(isSelectItemOpen)
                     $('#select-item-show').text('הוסף פריט');
                 else
                     $('#select-item-show').text('בטל הוספת פריט');
                 isSelectItemOpen = !isSelectItemOpen;
-            })
-            $("button[id^='select-product-id-']").click(function(){
-                console.log('here')
-            })
+            }
+
+            $('#select-item-show').click(itemClicked);
+            
             var options = {
-                height : 6,
-                float: true
+                height : 9,
+                float: true,
             };
+            
+
             $('.grid-stack').gridstack(options);
 
-            new function () {
-                this.items = [
-                    {x: 0, y: 0, width: 2, height: 2},
-                    {x: 3, y: 1, width: 1, height: 2},
-                    {x: 4, y: 1, width: 1, height: 1},
-                    {x: 2, y: 3, width: 3, height: 1},
-//                    {x: 1, y: 4, width: 1, height: 1},
-//                    {x: 1, y: 3, width: 1, height: 1},
-//                    {x: 2, y: 4, width: 1, height: 1},
-                    {x: 2, y: 5, width: 1, height: 1}
-                ];
+            var grid = $('.grid-stack').data('gridstack');
 
-                this.grid = $('.grid-stack').data('gridstack');
+            $(".btn-product-select").click(function(){
+                var row = $(this).closest("tr");    
+                var id = row.find(".product-id").text(); 
+                var name = row.find(".product-name").text(); 
+                grid.addWidget($('<div><div class="grid-stack-item-content">' + name + '<div/><div/>'),
+                        0, 0, 2, 2);
+                itemClicked();
+            });
 
-                this.addNewWidget = function () {
-                    var node = this.items.pop() || {
-                                x: 12 * Math.random(),
-                                y: 5 * Math.random(),
-                                width: 1 + 3 * Math.random(),
-                                height: 1 + 3 * Math.random()
-                            };
-                    this.grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
-                        node.x, node.y, node.width, node.height);
-                    return false;
-                }.bind(this);
+            $('.grid-stack').on('added', function(event, items) {
+                for (var i = 0; i < items.length; i++) {
+                  console.log('item added');
+                  console.log(items[i]);
+                }
+            });
 
-                $('#add-new-widget').click(this.addNewWidget);
-            };
+            $('.grid-stack').on('dragstop', function(event, ui) {
+                var grid = this;
+                var element = event.target;
+                console.log(element);
+            });
+
+            $('.grid-stack').on('resizestop', function(event, ui) {
+                var grid = this;
+                var element = event.target;
+                console.log(element);
+            });
+
+
         });
     </script>
     <script>$('.grid-stack').addTouch();</script>

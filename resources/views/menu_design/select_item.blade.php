@@ -3,7 +3,7 @@
 	<ul  class="nav nav-pills">
 		<li class="active"><a  href="#1a" data-toggle="tab">מוצרים</a>
 		</li>
-		<li><a href="#2a" data-toggle="tab">טפריטים</a>
+		<li><a href="#2a" data-toggle="tab">תפריטים</a>
 		</li>
 	</ul>
 
@@ -13,7 +13,7 @@
       			@include('menu_design.product_select_table')
 			</div>
 			<div class="tab-pane" id="2a">
-      			<h3>טפריטים</h3>
+      			<h3>תפריטים</h3>
       			@include('menu_design.menu_select_table')
 			</div>
 </div>

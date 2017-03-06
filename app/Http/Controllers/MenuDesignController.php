@@ -14,15 +14,14 @@ class MenuDesignController extends Controller
     
     public function __construct()
     {
-    	xdebug_break();
     	$this->products = Product::all();
     	$this->menus = Menu::all();
     	$this->currentMenu = $this->menus->first()->get();
     }
     public function index()
     {
-	    
-    	return view('menu_design.index')->withProducts($this->products)->withMenus($this->menus)->withCurrentMenu($this->currentMenu);
+	    //xdebug_break();
+    	return view('menu_design.index')->withProducts($this->products)->withMenus($this->menus)->with('currentMenu', $this->currentMenu);
     }
 
     public function productSelected($id)

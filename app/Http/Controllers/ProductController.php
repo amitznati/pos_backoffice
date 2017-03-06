@@ -83,7 +83,8 @@ class ProductController extends AppBaseController
     {
         $input = $request->all();
         $product = $this->productRepository->create($input);
-		$product->vendor()->sync($request->vendor_id);
+        if($request->vendor_id)
+		  $product->vendor()->sync($request->vendor_id);
         Flash::success('Product saved successfully.');
 
         return redirect(route('products.index'));
