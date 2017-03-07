@@ -172,27 +172,35 @@
                         };
                     }, this);
                     var nodes = JSON.stringify(this.serializedData, null, '    ');
+                    $.post('{{route('menu_design.saveMenu') }}',{nodes: nodes,menu_id: currentMenu.id},function(data){
+                        console.log(data);
+                        if(data == "success")
+                            window.location.replace('{{route('menu_design.index') }}');
+                        else
+                            console.log("Error");
+
+                    });
                 //Send the AJAX call to the server
-                  $.ajax({
-                  //The URL to process the request
-                    'url' : '{{route('menu_design.saveMenu') }}',
-                  //The type of request, also known as the "method" in HTML forms
-                  //Can be 'GET' or 'POST'
-                    'type' : 'POST',
-                  //Any post-data/get-data parameters
-                  //This is optional
-                    'data' : {
-                      'nodes': nodes,
-                      'menu_id': currentMenu.id
-                    },
-                  //The response from the server
-                    'success' : function(data) {
-                    //You can use any jQuery/JavaScript here!!!
-                      if (data == "success") {
-                        alert('request sent!');
-                      }
-                    }
-                  });
+                  // $.ajax({
+                  // //The URL to process the request
+                  //   'url' : '{{route('menu_design.saveMenu') }}',
+                  // //The type of request, also known as the "method" in HTML forms
+                  // //Can be 'GET' or 'POST'
+                  //   'type' : 'GET',
+                  // //Any post-data/get-data parameters
+                  // //This is optional
+                  //   'data' : {
+                  //     'nodes': nodes,
+                  //     'menu_id': currentMenu.id
+                  //   },
+                  // //The response from the server
+                  //   'success' : function(data) {
+                  //   //You can use any jQuery/JavaScript here!!!
+                  //     if (data == "success") {
+                  //       alert('request sent!');
+                  //     }
+                  //   }
+                  // });
                 });
 
 

@@ -6,6 +6,8 @@ use App\Models\Product;
 use App\Models\Menu;
 use App\Models\DisplayInfo;
 use Illuminate\Http\Request;
+use Flash;
+use Response;
 
 class MenuDesignController extends Controller
 {
@@ -37,6 +39,9 @@ class MenuDesignController extends Controller
 			$displayable->menu_id = $input['menu_id'];
 			$displayable->save();
 		}
-        return redirect(route('menu_design.index'));
+
+        Flash::success('Menu Saved successfully.');
+
+        return 'success';
     }
 }
