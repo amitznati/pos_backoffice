@@ -49,7 +49,7 @@ class Menu extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function displayInfos()
+    public function containsDisplayInfos()
     {
         return $this->hasMany(\App\Models\DisplayInfo::class);
     }
