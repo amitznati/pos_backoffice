@@ -24,12 +24,7 @@
     </style>
 @endsection
 @section('content')
-    <section class="content-header">
-        <h1 class="pull-{{$left}}">עיצוב תפריט</h1>
-        <h1 class="pull-{{$right}}">
-           <a class="btn btn-primary pull-{{$right}}" style="margin-top: -10px;margin-bottom: 5px" href="#">הוסף פריט</a>
-        </h1>
-    </section>
+
     <div class="content">
         <div class="clearfix"></div>
 
@@ -78,7 +73,7 @@
                 return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
             }
 
-            console.log("{{url('menu_design.saveMenu') }}");
+            console.log("{{route('menu_design.saveMenu') }}");
             
 
             var currentMenu = {!! $currentMenu !!};
@@ -109,7 +104,7 @@
 
             var addItemToGrid = function(node)
             {
-                grid.addWidget($('<div item-type="'+ node.displayable_type +'" item-id="'+ node.displayable_id +'"><div class="grid-stack-item-content">' + node.display_name + '<div/><div/>'),
+                grid.addWidget($('<div display_name="'+node.display_name+'" item-type="'+ node.displayable_type +'" item-id="'+ node.displayable_id +'"><div class="grid-stack-item-content">' + node.display_name + '<div/><div/>'),
                         node.index_row, node.index_column, node.number_of_rows, node.number_of_columns);
             }
 
@@ -128,7 +123,7 @@
                 var node = {
                     display_name: name,
                     displayable_id: id,
-                    displayable_type: toTitleCase(type),
+                    displayable_type: 'App\\Models\\'+ toTitleCase(type),
                     index_row: 0,
                     index_column: 0,
                     number_of_rows: 2,
@@ -161,28 +156,44 @@
 
             });
 
-            $('#btnSave').click(updateDatabase);
+            $('#btnSave').click(function() {
+                this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+                        el = $(el);
+                        var node = el.data('_gridstack_node');
+                        return {
+                            index_row: node.x,
+                            index_column: node.y,
+                            number_of_columns: node.width,
+                            number_of_rows: node.height,
+                            displayable_type: el.attr('item-type'),
+                            displayable_id: el.attr('item-id'),
+                            display_name: el.attr('display_name'),
 
-            function updateDatabase()
-            {
-
-                // make an ajax request to a PHP file
-                // on our site that will update the database
-                // pass in our lat/lng as parameters
-                $.ajax( {url: "{{url('menu_design.saveMenu') }}", type: "GET", data: [ "Jon", "Susan" ] } );
-                // $.post('{{url('menu_design.saveMenu') }}', {
-                //      _token: $('meta[name=csrf-token]').attr('content'),
-                //      nodes: grid.grid.nodes[0],
-                //      menu_id: currentMenu.id
-                //  }
-                // )
-                // .done(function(data) {
-                //     alert(data);
-                // })
-                // .fail(function() {
-                //     alert( "error" );
-                // });
-            }
+                        };
+                    }, this);
+                    var nodes = JSON.stringify(this.serializedData, null, '    ');
+                //Send the AJAX call to the server
+                  $.ajax({
+                  //The URL to process the request
+                    'url' : '{{route('menu_design.saveMenu') }}',
+                  //The type of request, also known as the "method" in HTML forms
+                  //Can be 'GET' or 'POST'
+                    'type' : 'POST',
+                  //Any post-data/get-data parameters
+                  //This is optional
+                    'data' : {
+                      'nodes': nodes,
+                      'menu_id': currentMenu.id
+                    },
+                  //The response from the server
+                    'success' : function(data) {
+                    //You can use any jQuery/JavaScript here!!!
+                      if (data == "success") {
+                        alert('request sent!');
+                      }
+                    }
+                  });
+                });
 
 
         

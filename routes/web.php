@@ -51,6 +51,6 @@ Route::resource('vendors', 'VendorController');
 Route::resource('saleryTypes', 'SaleryTypeController');
 
 Route::get('menu_design/index',['as' => 'menu_design.index', 'uses' => 'MenuDesignController@index']);
-Route::get('menu_design/saveMenu',['as' => 'menu_design.saveMenu', 'uses' => 'MenuDesignController@saveMenu']);
+Route::post('menu_design/saveMenu',['as' => 'menu_design.saveMenu', 'uses' => 'MenuDesignController@saveMenu']);
 
 Route::resource('menus', 'MenuController');
