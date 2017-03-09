@@ -28,7 +28,7 @@ class MenuDesignController extends Controller
 
     public function saveMenu(Request $request)
     {
-    	xdebug_break();
+    	//xdebug_break();
         $input = $request->all();
         $menu = Menu::find($input['menu_id']);
         $menu->containsDisplayInfos()->delete();

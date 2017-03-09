@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Eloquent as Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class DisplayInfo
@@ -12,16 +11,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DisplayInfo extends Model
 {
-    use SoftDeletes;
+    
+
+    public $timestamps = false;
 
     public $table = 'display_info';
-    
-    const CREATED_AT = 'created_at';
-    const UPDATED_AT = 'updated_at';
-
-
-    protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'menu_id',
