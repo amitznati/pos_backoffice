@@ -2,6 +2,7 @@
 
 @section('after_styles')
     <link rel="stylesheet" href="{{asset('gridstack.js-master')}}/dist/gridstack.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
 
 
     <style type="text/css">
@@ -48,8 +49,7 @@
                 <div class="box-body" style="height: 720px;">
                     <div class="row-fluid" >
                         <div class="col-sm-12">
-                            <div class="grid-stack">
-                            </div>
+                            <div data-bind="component: {name: 'dashboard-grid', params: $data}"></div>
                         </div>
                     </div>                    
                 </div>
@@ -72,15 +72,13 @@
             {
                 return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
             }
-
-            console.log("{{route('menu_design.saveMenu') }}");
             
 
             var currentMenu = {!! $currentMenu !!};
-            console.log(currentMenu);
+
             var isSelectItemOpen = false;
 
-            var itemClicked = function()
+            var showSelectItemClicked = function()
             {
                 $('#select-item-fields').toggle();
                 $('.grid-stack-div').toggle();
@@ -91,16 +89,16 @@
                 isSelectItemOpen = !isSelectItemOpen;
             }
 
-            $('#select-item-show').click(itemClicked);
+            $('#select-item-show').click(showSelectItemClicked);
             
-            var options = {
-                height : 9,
-                float: true,
-            };
+            // var options = {
+            //     height : 9,
+            //     float: true,
+            // };
             
 
-            $('.grid-stack').gridstack(options);
-            var grid = $('.grid-stack').data('gridstack');
+            // $('.grid-stack').gridstack(options);
+            // var grid = $('.grid-stack').data('gridstack');
 
             var addItemToGrid = function(node)
             {
@@ -108,12 +106,12 @@
                         node.index_row, node.index_column, node.number_of_rows, node.number_of_columns);
             }
 
-            if(currentMenu)
-            {
-                currentMenu.contains_display_infos.forEach(function(displayInfo){
-                    addItemToGrid(displayInfo);
-                });
-            }
+            // if(currentMenu)
+            // {
+            //     currentMenu.contains_display_infos.forEach(function(displayInfo){
+            //         addItemToGrid(displayInfo);
+            //     });
+            // }
 
             var creatNewDisaplyableItem = function(td,type)
             {
@@ -124,10 +122,10 @@
                     display_name: name,
                     displayable_id: id,
                     displayable_type: 'App\\Models\\'+ toTitleCase(type),
-                    index_row: 0,
-                    index_column: 0,
-                    number_of_rows: 2,
-                    number_of_columns: 2 
+                    x: 0,
+                    y: 0,
+                    width: 2,
+                    height: 2 
                 } 
                 return node;
             }
@@ -138,33 +136,16 @@
                 itemClicked();
             });
 
-            
-
-            $('.grid-stack').on('added', function(event, items) {
-                for (var i = 0; i < items.length; i++) {
-                  console.log('item added');
-                }
-            });
-
-            $('.grid-stack').on('dragstop', function(event, ui) {
-                var element = event.target;
-                console.log(grid.grid.nodes[0]);
-            });
-
-            $('.grid-stack').on('resizestop', function(event, ui) {
-                var element = event.target;
-
-            });
 
             $('#btnSave').click(function() {
                 this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
                         el = $(el);
                         var node = el.data('_gridstack_node');
                         return {
-                            index_row: node.x,
-                            index_column: node.y,
-                            number_of_columns: node.width,
-                            number_of_rows: node.height,
+                            x: node.x,
+                            y: node.y,
+                            width: node.width,
+                            height: node.height,
                             displayable_type: el.attr('item-type'),
                             displayable_id: el.attr('item-id'),
                             display_name: el.attr('display_name'),
@@ -180,31 +161,99 @@
                             console.log("Error");
 
                     });
-                //Send the AJAX call to the server
-                  // $.ajax({
-                  // //The URL to process the request
-                  //   'url' : '{{route('menu_design.saveMenu') }}',
-                  // //The type of request, also known as the "method" in HTML forms
-                  // //Can be 'GET' or 'POST'
-                  //   'type' : 'GET',
-                  // //Any post-data/get-data parameters
-                  // //This is optional
-                  //   'data' : {
-                  //     'nodes': nodes,
-                  //     'menu_id': currentMenu.id
-                  //   },
-                  // //The response from the server
-                  //   'success' : function(data) {
-                  //   //You can use any jQuery/JavaScript here!!!
-                  //     if (data == "success") {
-                  //       alert('request sent!');
-                  //     }
-                  //   }
-                  // });
                 });
 
 
         
     </script>
+    
+    <script>
+        var mapDisplayInfosToWidgets = function(displayInfos)
+        {
+            var widgets = [];
+            if(displayInfos)
+            {
+                displayInfos.forEach(function(displayInfo)
+                {
+                    widgets.push({
+                        x:displayInfo.x,
+                        y:displayInfo.y,
+                        width: displayInfo.width,
+                        height: displayInfo.height,
+                        type: displayInfo.displayable_type,
+                        itemID: displayInfos.displayable_id
+                    });
+                });
+            }
+            return widgets;
+        }
+
+        ko.components.register('dashboard-grid', {
+            viewModel: {
+                createViewModel: function (controller, componentInfo) {
+                    var ViewModel = function (controller, componentInfo) {
+                        var grid = null;
+
+                        this.widgets = controller.widgets;
+
+                        this.afterAddWidget = function (items) {
+                            if (grid == null) {
+                                grid = $(componentInfo.element).find('.grid-stack').gridstack({
+                                    auto: false,
+                                    height : 9,
+                                    float: true,
+                                }).data('gridstack');
+                            }
+
+                            var item = _.find(items, function (i) { return i.nodeType == 1 });
+                            grid.addWidget(item);
+                            ko.utils.domNodeDisposal.addDisposeCallback(item, function () {
+                                grid.removeWidget(item);
+                            });
+                        };
+                    };
+
+                    return new ViewModel(controller, componentInfo);
+                }
+            },
+            template: { element: 'gridstack-template' }
+        });
+
+        $(function () {
+            var Controller = function (widgets) {
+                var self = this;
+
+                this.widgets = ko.observableArray(widgets);
+
+                this.addNewWidget = function () {
+                    this.widgets.push({
+                        x: 0,
+                        y: 0,
+                        width: 2,
+                        height: 2,
+                        auto_position: true
+                    });
+                    return false;
+                };
+
+                this.deleteWidget = function (item) {
+                    self.widgets.remove(item);
+                    return false;
+                };
+            };
+
+            var widgets = mapDisplayInfosToWidgets(currentMenu.contains_display_infos);
+
+            var controller = new Controller(widgets);
+            ko.applyBindings(controller);
+        });
+    </script>
+    <template id="gridstack-template">
+        <div class="grid-stack" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}">
+           <div class="grid-stack-item" data-bind="attr: {'display_name': $data.display_name, 'item-type': $data.type, 'item-id': $data.item-id, 'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}">
+               <div class="grid-stack-item-content"><button data-bind="click: $root.deleteWidget">Delete me</button></div>
+           </div></div><!-- <---- NO SPACE BETWEEN THESE CLOSING TAGS -->
+    </template>
+
     <script>$('.grid-stack').addTouch();</script>
 @endsection

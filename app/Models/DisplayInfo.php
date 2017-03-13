@@ -22,10 +22,10 @@ class DisplayInfo extends Model
         'displayable_id',
         'displayable_type',
         'display_name',
-        'index_row',
-        'index_column',
-        'number_of_rows',
-        'number_of_columns'
+        'x',
+        'y',
+        'width',
+        'height'
     ];
 
     /**
@@ -39,10 +39,10 @@ class DisplayInfo extends Model
         'displayable_id' => 'integer',
         'displayable_type' => 'string',
         'display_name' => 'string',
-        'index_row' => 'integer',
-        'index_column' => 'integer',
-        'number_of_rows' => 'integer',
-        'number_of_columns' => 'integer'
+        'x' => 'integer',
+        'y' => 'integer',
+        'width' => 'integer',
+        'height' => 'integer'
     ];
 
     /**
