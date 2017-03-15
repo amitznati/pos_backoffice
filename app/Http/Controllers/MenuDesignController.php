@@ -17,7 +17,7 @@ class MenuDesignController extends Controller
     
     public function __construct()
     {
-    	$this->products = Product::all();
+    	$this->products = Product::all()->load('group');
     	$this->menus = Menu::all();
     	$this->currentMenu = $this->menus[0]->load('containsDisplayInfos');
     }
@@ -28,7 +28,8 @@ class MenuDesignController extends Controller
 
     public function saveMenu(Request $request)
     {
-    	//xdebug_break();
+    	xdebug_break();
+        //dd($request->all());
         $input = $request->all();
         $menu = Menu::find($input['menu_id']);
         $menu->containsDisplayInfos()->delete();
