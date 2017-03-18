@@ -17,7 +17,7 @@ class MenuDesignController extends Controller
     
     public function __construct()
     {
-    	$this->products = Product::all()->load('group');
+    	$this->products = Product::all()->load('group')->load('department');
     	$this->menus = Menu::all();
     	$this->currentMenu = $this->menus[0]->load('containsDisplayInfos');
     }
