@@ -25,7 +25,8 @@ class DisplayInfo extends Model
         'x',
         'y',
         'width',
-        'height'
+        'height',
+        'backgroundColor'
     ];
 
     /**
@@ -42,7 +43,8 @@ class DisplayInfo extends Model
         'x' => 'integer',
         'y' => 'integer',
         'width' => 'integer',
-        'height' => 'integer'
+        'height' => 'integer',
+        'backgroundColor' => 'string'
     ];
 
     /**

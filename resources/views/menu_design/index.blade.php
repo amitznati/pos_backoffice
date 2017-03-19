@@ -17,7 +17,7 @@
             
             text-align: center;
             vertical-align: middle;
-            background: rgb(123, 150, 15);
+            
         }
 
        
@@ -107,17 +107,7 @@
                 this.widgets = ko.observableArray({!!$currentMenu->containsDisplayInfos!!});
                 this.products = ko.observableArray({!!$products!!});
                 this.menus = ko.observableArray({!!$menus!!});
-                this.addNewWidget = function () {
-                    this.widgets.push({
-                        x: 0,
-                        y: 0,
-                        width: Math.floor(1 + 3 * Math.random()),
-                        height: Math.floor(1 + 3 * Math.random()),
-                        auto_position: true
-                    });
-                    return false;
-                };
-
+                console.log(this.widgets())
                 this.deleteWidget = function (item) {
                     self.widgets.remove(item);
                     return false;
@@ -134,6 +124,8 @@
                     this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
                         el = $(el);
                         var node = el.data('_gridstack_node');
+                        var bg = el.find('.grid-stack-item-content').css('background').substring(0, 17);
+                        console.log(bg);
                         return {
                             x: node.x,
                             y: node.y,
@@ -142,6 +134,8 @@
                             displayable_type: el.attr('displayable_type'),
                             displayable_id: el.attr('displayable_id'),
                             display_name: el.attr('display_name'),
+                            backgroundColor: bg
+
                         };
                     }, this);
                     var nodes = JSON.stringify(this.serializedData, null, '    ');
@@ -151,7 +145,10 @@
                         menu_id: {!!$currentMenu->id!!}
                     },
                     function(data, status){
-                        alert("Data: " + data + "\nStatus: " + status);
+                        if(data == "success")
+                            window.location.replace('{{route('menu_design.index') }}');
+                        else
+                            console.log("Error");
                     })
                 }
 
@@ -185,7 +182,7 @@
     <template id="gridstack-template">
         <div class="grid-stack" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}">
            <div class="grid-stack-item" data-bind="attr: {'display_name': $data.display_name, 'displayable_type': $data.displayable_type, 'displayable_id': $data.displayable_id, 'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}">
-               <div class="grid-stack-item-content"><p data-bind='text: $data.display_name'></p>
+               <div data-bind="style: {background: $data.backgroundColor}" class="grid-stack-item-content"><p data-bind='text: $data.display_name'></p>
                <div  style="bottom: 1px;position: absolute;">
                    <button  class="btn btn-danger btn-xs" data-bind="click: $root.deleteWidget"><i class="glyphicon glyphicon-trash"></i></button>
                    <div style="float: right;" data-bind="visible: $data.displayable_type == 'App\\Models\\Menu'">

@@ -23,7 +23,7 @@ class CreateDisplayinfoTable extends Migration
             $table->integer('width');
             $table->integer('height');
             $table->longText('display_properties')->nullable()->default(null);
-            $table->string('BackgroundColor', 50)->nullable()->default(null);
+            $table->string('backgroundColor', 50)->nullable()->default(null);
             $table->string('text_color', 50)->nullable()->default(null);
             $table->string('font_family', 50)->nullable()->default(null);
             $table->longText('image')->nullable()->default(null);
