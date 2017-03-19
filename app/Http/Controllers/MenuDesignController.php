@@ -22,7 +22,7 @@ class MenuDesignController extends Controller
     	$this->currentMenu = $this->menus[0]->load('containsDisplayInfos');
     }
     public function index()
-    {   
+    {   //xdebug_break();
     	return view('menu_design.index')->withProducts($this->products)->withMenus($this->menus)->with('currentMenu', $this->currentMenu);
     }
 

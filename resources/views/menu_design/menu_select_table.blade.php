@@ -4,15 +4,13 @@
         <th>Name</th>
         <th colspan="3">Action</th>
     </thead>
-    <tbody>
-    @foreach($menus as $menu)
+    <tbody data-bind="foreach: menus">
         <tr>
-            <td class="menu-id">{!! $menu->id !!}</td>
-            <td class="menu-name">{!! $menu->name !!}</td>
+            <td data-bind="text: id"></td>
+            <td data-bind="text: name"></td>
             <td>
-                <button class='btn btn-default btn-menu-select'> בחר </button>
+                <button data-bind="click: $root.menuSelect" class='btn btn-default btn-menu-select'> בחר </button>
             </td>
         </tr>
-    @endforeach
     </tbody>
 </table>

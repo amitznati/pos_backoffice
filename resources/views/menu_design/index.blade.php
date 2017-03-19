@@ -35,9 +35,6 @@
             <div class="box-body">
             <a data-bind="click: showItemSelect, text: showText" class="btn btn-primary"></a>
             <a data-bind="click: save" class='btn btn-primary'><i class="glyphicon glyphicon-eye-open"></i>שמור</a>
-                <div id="select-item-fields" class="row" style="display:none">
-                    @include('menu_design.select_item')
-                </div>
             </div>
         </div>
         <div>
@@ -51,7 +48,7 @@
                         <div class="col-sm-12">
                             <div data-bind="visible: itemSelectVisible()==false, component: {name: 'dashboard-grid', params: $data}"></div>
                             <div data-bind="visible: itemSelectVisible">
-                                @include('menu_design.select_item')
+                               @include('menu_design.select_item')
                             </div>
                         </div>
                     </div>                    
@@ -107,9 +104,9 @@
                 
                 this.itemSelectVisible = ko.observable(false);
                 this.showText = ko.observable('הוסף פריט');
-                this.widgets = ko.observableArray(widgets);
+                this.widgets = ko.observableArray({!!$currentMenu->containsDisplayInfos!!});
                 this.products = ko.observableArray({!!$products!!});
-                console.log(this.products())
+                this.menus = ko.observableArray({!!$menus!!});
                 this.addNewWidget = function () {
                     this.widgets.push({
                         x: 0,
@@ -134,21 +131,52 @@
                 }
 
                 this.save = function(){
-
+                    this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+                        el = $(el);
+                        var node = el.data('_gridstack_node');
+                        return {
+                            x: node.x,
+                            y: node.y,
+                            width: node.width,
+                            height: node.height,
+                            displayable_type: el.attr('displayable_type'),
+                            displayable_id: el.attr('displayable_id'),
+                            display_name: el.attr('display_name'),
+                        };
+                    }, this);
+                    var nodes = JSON.stringify(this.serializedData, null, '    ');
+                    $.post("{{route('menu_design.saveMenu') }}",
+                    {
+                        nodes: nodes,
+                        menu_id: {!!$currentMenu->id!!}
+                    },
+                    function(data, status){
+                        alert("Data: " + data + "\nStatus: " + status);
+                    })
                 }
 
-                this.itemSelect = function(item){
-                    console.log(item);
+                this.addItem = function(item,type){
+                    self.widgets.push({
+                        x: 0,
+                        y: 0,
+                        width: 2,
+                        height: 2,
+                        auto_position: true,
+                        displayable_type: type,
+                        display_name: item.name,
+                        displayable_id: item.id
+                    });
+                    self.showItemSelect();
+                    return false;
+                }
+                this.productSelect = function(item){
+                    return self.addItem(item,'App\\Models\\Product');
+                }
+                this.menuSelect = function(item){
+                    return self.addItem(item,'App\\Models\\Menu');
                 }
             };
-
-            var widgets = [
-                {x: 0, y: 0, width: 2, height: 2},
-                {x: 2, y: 0, width: 4, height: 2},
-                {x: 6, y: 0, width: 2, height: 4},
-                {x: 1, y: 2, width: 4, height: 2}
-            ];
-
+            var widgets = [];
             var controller = new Controller(widgets);
             ko.applyBindings(controller);
         });
@@ -156,8 +184,16 @@
     </script>
     <template id="gridstack-template">
         <div class="grid-stack" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}">
-           <div class="grid-stack-item" data-bind="attr: {'display_name': $data.display_name, 'item-type': $data.type, 'item-id': $data.itemID, 'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}">
-               <div class="grid-stack-item-content"><button data-bind="click: $root.deleteWidget">Delete me</button></div>
+           <div class="grid-stack-item" data-bind="attr: {'display_name': $data.display_name, 'displayable_type': $data.displayable_type, 'displayable_id': $data.displayable_id, 'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}">
+               <div class="grid-stack-item-content"><p data-bind='text: $data.display_name'></p>
+               <div  style="bottom: 1px;position: absolute;">
+                   <button  class="btn btn-danger btn-xs" data-bind="click: $root.deleteWidget"><i class="glyphicon glyphicon-trash"></i></button>
+                   <div style="float: right;" data-bind="visible: $data.displayable_type == 'App\\Models\\Menu'">
+                       <button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-eye-open"></i>
+                   </div>
+                    </button>
+               </div>
+               </div>
            </div></div><!-- <---- NO SPACE BETWEEN THESE CLOSING TAGS -->
     </template>
 
