@@ -3,6 +3,7 @@
 @section('after_styles')
     <link rel="stylesheet" href="{{asset('gridstack.js-master')}}/dist/gridstack.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.2.0/knockout-min.js"></script>
+    <script src="{{asset('jscolor-2.0.4')}}/jscolor.min.js"></script>
 
 
     <style type="text/css">
@@ -30,11 +31,13 @@
         <div class="clearfix"></div>
 
         @include('flash::message')
-
+        
         <div class="clearfix">
             <div class="box-body">
             <a data-bind="click: showItemSelect, text: showText" class="btn btn-primary"></a>
             <a data-bind="click: save" class='btn btn-primary'><i class="glyphicon glyphicon-eye-open"></i>שמור</a>
+<div class="bfh-colorpicker" data-name="colorpicker1">
+</div>
             </div>
         </div>
         <div>
@@ -74,7 +77,7 @@
 
                         this.widgets = controller.widgets;
                         
-
+                        this.color = ko.observable('ff6699');
                         this.afterAddWidget = function (items) {
                             if (grid == null) {
                                 grid = $(componentInfo.element).find('.grid-stack').gridstack({
@@ -83,9 +86,15 @@
                                     height: 9
                                 }).data('gridstack');
                             }
+                            
 
                             var item = _.find(items, function (i) { return i.nodeType == 1 });
                             grid.addWidget(item);
+                            $($(item).find('.jscolor')[0]).addClass('btn btn-default btn-xs');
+                            $($(item).find('.jscolor')[0]).change(function(){
+                                $($(item).find('.grid-stack-item-content')[0]).css('background',hexToRgb($(this).val()));
+                            })
+                            jscolor.installByClassName('jscolor');
                             ko.utils.domNodeDisposal.addDisposeCallback(item, function () {
                                 grid.removeWidget(item);
                             });
@@ -107,7 +116,7 @@
                 this.widgets = ko.observableArray({!!$currentMenu->containsDisplayInfos!!});
                 this.products = ko.observableArray({!!$products!!});
                 this.menus = ko.observableArray({!!$menus!!});
-                console.log(this.widgets())
+
                 this.deleteWidget = function (item) {
                     self.widgets.remove(item);
                     return false;
@@ -124,7 +133,7 @@
                     this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
                         el = $(el);
                         var node = el.data('_gridstack_node');
-                        var bg = el.find('.grid-stack-item-content').css('background').substring(0, 17);
+                        var bg = el.find('.grid-stack-item-content').css('background').substring(0, 18);
                         console.log(bg);
                         return {
                             x: node.x,
@@ -161,7 +170,8 @@
                         auto_position: true,
                         displayable_type: type,
                         display_name: item.name,
-                        displayable_id: item.id
+                        displayable_id: item.id,
+                        backgroundColor: ko.observable('blue')
                     });
                     self.showItemSelect();
                     return false;
@@ -189,10 +199,19 @@
                        <button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-eye-open"></i>
                    </div>
                     </button>
+                    Color: <input style="width: 50px;" class="jscolor btn btn-default btn-xs">
                </div>
                </div>
            </div></div><!-- <---- NO SPACE BETWEEN THESE CLOSING TAGS -->
     </template>
 
-    <script>$('.grid-stack').addTouch();</script>
+    <script>
+        $('.grid-stack').addTouch();
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? 'rgb( '+parseInt(result[1], 16)+', '+parseInt(result[2], 16)+', '+parseInt(result[3], 16)+')'
+                 : null;
+        }
+    </script>
+
 @endsection
