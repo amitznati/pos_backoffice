@@ -21,8 +21,14 @@ class MenuDesignController extends Controller
     	$this->menus = Menu::all();
     	$this->currentMenu = $this->menus[0]->load('containsDisplayInfos');
     }
-    public function index()
+    public function index(Request $request)
     {   //xdebug_break();
+        if(is_numeric($request->menu_id))
+        {
+        	$menu = Menu::find($request->menu_id);
+        	if($menu)
+            	$this->currentMenu = $menu->load('containsDisplayInfos');
+        }
     	return view('menu_design.index')->withProducts($this->products)->withMenus($this->menus)->with('currentMenu', $this->currentMenu);
     }
 

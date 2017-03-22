@@ -36,8 +36,6 @@
             <div class="box-body">
             <a data-bind="click: showItemSelect, text: showText" class="btn btn-primary"></a>
             <a data-bind="click: save" class='btn btn-primary'><i class="glyphicon glyphicon-eye-open"></i>שמור</a>
-<div class="bfh-colorpicker" data-name="colorpicker1">
-</div>
             </div>
         </div>
         <div>
@@ -90,7 +88,11 @@
 
                             var item = _.find(items, function (i) { return i.nodeType == 1 });
                             grid.addWidget(item);
-                            $($(item).find('.jscolor')[0]).addClass('btn btn-default btn-xs');
+                            if($(item).attr('displayable_type') == 'App\\Models\\Menu')
+                            {
+                                $($(item).find('a')[0]).attr('href',"{!! route('menu_design.index') !!}" + "?menu_id="+$(item).attr('displayable_id') );
+                            }
+                            console.log($($(item).find('a')[0]).attr('href'))
                             $($(item).find('.jscolor')[0]).change(function(){
                                 $($(item).find('.grid-stack-item-content')[0]).css('background',hexToRgb($(this).val()));
                             })
@@ -119,6 +121,7 @@
 
                 this.deleteWidget = function (item) {
                     self.widgets.remove(item);
+                    console.log(item);
                     return false;
                 };
 
@@ -134,7 +137,6 @@
                         el = $(el);
                         var node = el.data('_gridstack_node');
                         var bg = el.find('.grid-stack-item-content').css('background').substring(0, 18);
-                        console.log(bg);
                         return {
                             x: node.x,
                             y: node.y,
@@ -171,7 +173,8 @@
                         displayable_type: type,
                         display_name: item.name,
                         displayable_id: item.id,
-                        backgroundColor: ko.observable('blue')
+                        backgroundColor: ko.observable('blue'),
+                        url: "{!! route('menu_design.index') !!}" + "?menu_id="+item.id 
                     });
                     self.showItemSelect();
                     return false;
@@ -182,6 +185,7 @@
                 this.menuSelect = function(item){
                     return self.addItem(item,'App\\Models\\Menu');
                 }
+
             };
             var widgets = [];
             var controller = new Controller(widgets);
@@ -194,11 +198,10 @@
            <div class="grid-stack-item" data-bind="attr: {'display_name': $data.display_name, 'displayable_type': $data.displayable_type, 'displayable_id': $data.displayable_id, 'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}">
                <div data-bind="style: {background: $data.backgroundColor}" class="grid-stack-item-content"><p data-bind='text: $data.display_name'></p>
                <div  style="bottom: 1px;position: absolute;">
-                   <button  class="btn btn-danger btn-xs" data-bind="click: $root.deleteWidget"><i class="glyphicon glyphicon-trash"></i></button>
-                   <div style="float: right;" data-bind="visible: $data.displayable_type == 'App\\Models\\Menu'">
-                       <button class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-eye-open"></i>
-                   </div>
-                    </button>
+                    <button  class="btn btn-danger btn-xs" data-bind="click: $root.deleteWidget"><i class="glyphicon glyphicon-trash"></i></button>
+                   
+                    <a style="float: right;" data-bind="visible: $data.displayable_type == 'App\\Models\\Menu'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-eye-open"></i></a>
+                  
                     Color: <input style="width: 50px;" class="jscolor btn btn-default btn-xs">
                </div>
                </div>
