@@ -88,14 +88,11 @@
 
                             var item = _.find(items, function (i) { return i.nodeType == 1 });
                             grid.addWidget(item);
-                            if($(item).attr('displayable_type') == 'App\\Models\\Menu')
-                            {
-                                $($(item).find('a')[0]).attr('href',"{!! route('menu_design.index') !!}" + "?menu_id="+$(item).attr('displayable_id') );
-                            }
-                            console.log($($(item).find('a')[0]).attr('href'))
+
                             $($(item).find('.jscolor')[0]).change(function(){
                                 $($(item).find('.grid-stack-item-content')[0]).css('background',hexToRgb($(this).val()));
                             })
+
                             jscolor.installByClassName('jscolor');
                             ko.utils.domNodeDisposal.addDisposeCallback(item, function () {
                                 grid.removeWidget(item);
@@ -118,6 +115,7 @@
                 this.widgets = ko.observableArray({!!$currentMenu->containsDisplayInfos!!});
                 this.products = ko.observableArray({!!$products!!});
                 this.menus = ko.observableArray({!!$menus!!});
+                this.currentMenu = ko.observable({!!$currentMenu!!});
 
                 this.deleteWidget = function (item) {
                     self.widgets.remove(item);
@@ -136,7 +134,8 @@
                     this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
                         el = $(el);
                         var node = el.data('_gridstack_node');
-                        var bg = el.find('.grid-stack-item-content').css('background').substring(0, 18);
+                        var bg = el.find('.grid-stack-item-content').css('background');
+                        bg = bg.substring(0,bg.indexOf(')')+1);
                         return {
                             x: node.x,
                             y: node.y,
@@ -153,7 +152,7 @@
                     $.post("{{route('menu_design.saveMenu') }}",
                     {
                         nodes: nodes,
-                        menu_id: {!!$currentMenu->id!!}
+                        menu_id: self.currentMenu().id
                     },
                     function(data, status){
                         if(data == "success")
@@ -173,8 +172,7 @@
                         displayable_type: type,
                         display_name: item.name,
                         displayable_id: item.id,
-                        backgroundColor: ko.observable('blue'),
-                        url: "{!! route('menu_design.index') !!}" + "?menu_id="+item.id 
+                        backgroundColor: ko.observable('rgb(72, 149, 212)'),
                     });
                     self.showItemSelect();
                     return false;
@@ -184,6 +182,16 @@
                 }
                 this.menuSelect = function(item){
                     return self.addItem(item,'App\\Models\\Menu');
+                }
+
+                this.openMenu = function(menu){
+                    //console.log(menu);
+                    ko.utils.arrayForEach(self.menus(),function(m){
+                        if(menu.displayable_id == m.id){
+                            self.currentMenu(m);
+                            self.widgets(m.contains_display_infos)
+                        }
+                    });
                 }
 
             };
@@ -200,9 +208,9 @@
                <div  style="bottom: 1px;position: absolute;">
                     <button  class="btn btn-danger btn-xs" data-bind="click: $root.deleteWidget"><i class="glyphicon glyphicon-trash"></i></button>
                    
-                    <a style="float: right;" data-bind="visible: $data.displayable_type == 'App\\Models\\Menu'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-eye-open"></i></a>
+                    <button  style="float: right;" data-bind="click: $root.openMenu, visible: $data.displayable_type == 'App\\Models\\Menu'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-eye-open"></i></button>
                   
-                    Color: <input style="width: 50px;" class="jscolor btn btn-default btn-xs">
+                    Color: <input data-bind="value: $data.backgroundColor" style="width: 50px;" class="jscolor btn btn-default btn-xs">
                </div>
                </div>
            </div></div><!-- <---- NO SPACE BETWEEN THESE CLOSING TAGS -->
