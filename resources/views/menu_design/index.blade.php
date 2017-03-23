@@ -39,7 +39,7 @@
             </div>
         </div>
         <div>
-            <p>{{$currentMenu->name}}</p>
+            <p data-bind="text: currentMenu().name"></p>
         </div>
         <div class="grid-stack-div">                  
             <div class="clearfix"></div>
@@ -155,8 +155,9 @@
                         menu_id: self.currentMenu().id
                     },
                     function(data, status){
-                        if(data == "success")
-                            window.location.replace('{{route('menu_design.index') }}');
+                        if(data == "success"){
+                            window.location.replace('{{route('menu_design.index') }}?menu_id='+self.currentMenu().id);
+                        }
                         else
                             console.log("Error");
                     })
@@ -205,10 +206,10 @@
         <div class="grid-stack" data-bind="foreach: {data: widgets, afterRender: afterAddWidget}">
            <div class="grid-stack-item" data-bind="attr: {'display_name': $data.display_name, 'displayable_type': $data.displayable_type, 'displayable_id': $data.displayable_id, 'data-gs-x': $data.x, 'data-gs-y': $data.y, 'data-gs-width': $data.width, 'data-gs-height': $data.height, 'data-gs-auto-position': $data.auto_position}">
                <div data-bind="style: {background: $data.backgroundColor}" class="grid-stack-item-content"><p data-bind='text: $data.display_name'></p>
-               <div  style="bottom: 1px;position: absolute;">
-                    <button  class="btn btn-danger btn-xs" data-bind="click: $root.deleteWidget"><i class="glyphicon glyphicon-trash"></i></button>
+               <div  style="bottom: 1px;position: absolute;left: 1px;">
+                    <button class="btn btn-danger btn-xs" data-bind="click: $root.deleteWidget"><i class="glyphicon glyphicon-trash"></i></button>
                    
-                    <button  style="float: right;" data-bind="click: $root.openMenu, visible: $data.displayable_type == 'App\\Models\\Menu'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-eye-open"></i></button>
+                    <button  data-bind="click: $root.openMenu, visible: $data.displayable_type == 'App\\Models\\Menu'" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-eye-open"></i></button>
                   
                     Color: <input data-bind="value: $data.backgroundColor" style="width: 50px;" class="jscolor btn btn-default btn-xs">
                </div>
