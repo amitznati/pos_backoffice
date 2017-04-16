@@ -42,6 +42,11 @@
         {!! Form::checkbox('add_salery', 'checked') !!}
         {!! Form::label('add_salery', 'Update Salery' ) !!}
       </div>
+  @else
+    <div class="form-group col-sm-12" >
+      {!! Form::checkbox('add_salery', 'checked') !!}
+      {!! Form::label('add_salery', 'Add Salery' ) !!}
+    </div>
   @endif
 
 </section>

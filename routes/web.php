@@ -20,37 +20,25 @@ Route::get('locale/{locale?}',
         'as' => 'locale.setlocale',
         'uses' => 'LocaleController@setLocale'
     ]);
-// Route::get('/locale/{locale}', function ($locale) {
-// 	xdebug_break();
-// 	App::setLocale($locale);
-//     return redirect('admin');
-// })->name('locale');
 
-Route::resource('departments', 'departmentController');
+Route::group([
+    //'prefix' => config('backpack.base.route_prefix', 'admin'),
+    'middleware' => ['admin'],
+   //'namespace' => 'Admin'
+], function() {
+    // your CRUD resources and other admin routes here
+    Route::resource('products', 'ProductController');
+    Route::resource('departments', 'departmentController');
+	Route::resource('groups', 'groupController');
+	Route::post('products/search', ['as' => 'products.search' , 'uses' => 'ProductController@search']);
+	Route::resource('people', 'PersonController');
+	Route::resource('employees', 'EmployeeController');
+	Route::resource('contacts', 'ContactController');
+	Route::resource('customers', 'CustomerController');
+	Route::resource('vendors', 'VendorController');
+	Route::resource('saleryTypes', 'SaleryTypeController');
+	Route::get('menu_design/index',['as' => 'menu_design.index', 'uses' => 'MenuDesignController@index']);
+	Route::post('menu_design/saveMenu',['as' => 'menu_design.saveMenu', 'uses' => 'MenuDesignController@saveMenu']);
+	Route::resource('menus', 'MenuController');
+});
 
-Route::resource('groups', 'groupController');
-
-Route::resource('products', 'ProductController');
-
-Route::post('products/search', ['as' => 'products.search' , 'uses' => 'ProductController@search']);
-
-
-
-
-
-Route::resource('people', 'PersonController');
-
-Route::resource('employees', 'EmployeeController');
-
-Route::resource('contacts', 'ContactController');
-
-Route::resource('customers', 'CustomerController');
-
-Route::resource('vendors', 'VendorController');
-
-Route::resource('saleryTypes', 'SaleryTypeController');
-
-Route::get('menu_design/index',['as' => 'menu_design.index', 'uses' => 'MenuDesignController@index']);
-Route::post('menu_design/saveMenu',['as' => 'menu_design.saveMenu', 'uses' => 'MenuDesignController@saveMenu']);
-
-Route::resource('menus', 'MenuController');
