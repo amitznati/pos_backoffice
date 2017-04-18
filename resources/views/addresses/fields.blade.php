@@ -1,6 +1,10 @@
 
     
 
+<div class="form-group col-sm-12">
+    {!! Form::label('address_string', 'Address:') !!}
+    <input id="geocomplete" type="text" placeholder="Type in an address" size="90" class="form-control" />
+</div>
 <!-- Street Name Field -->
 <div class="form-group col-sm-4">
     {!! Form::label('street_name', 'Street Name:') !!}

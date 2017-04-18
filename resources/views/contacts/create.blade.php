@@ -1,5 +1,8 @@
 @extends('backpack::layout')
 
+@section('before_scripts')
+
+@endsection
 @section('content')
     <section class="content-header">
         <h1>
@@ -27,5 +30,13 @@
     </div>
 @endsection
 @section('after_scripts')
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyC_GzE5UvLbPXBJN6QKwNL4hRiAdqAOkbY&amp;libraries=places"></script>
+    <script type="text/javascript" src="{{asset('js') }}/jquery.geocomplete.js"></script>
+    <script type="text/javascript">
+        $("#geocomplete").geocomplete().bind("geocode:result", function(event, result){
+            console.log(result);
+          })
+    </script>
+    
     @include('people.name_changed_script')
 @endsection
