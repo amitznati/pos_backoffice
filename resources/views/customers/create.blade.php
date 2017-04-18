@@ -28,4 +28,5 @@
 @endsection
 @section('after_scripts')
     @include('people.name_changed_script')
+    @include('addresses.address_api_script')
 @endsection
